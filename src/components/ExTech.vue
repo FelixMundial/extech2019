@@ -2,7 +2,7 @@
   <div class="extech-container">
     <el-row>
       <el-button class="extech-header" type="success" plain>
-        <router-link to="/register">
+        <router-link to="/registration">
           报名入口 <i class="el-icon-success"></i> Register Now
         </router-link>
       </el-button>
@@ -11,7 +11,7 @@
         <div style="text-align: right; margin: 0">
           <el-button size="mini" type="text" @click="popoverShown = false">返回 | return</el-button>
           <el-button type="primary" plain size="mini" @click="popoverShown = false">
-            <router-link to="/register">
+            <router-link to="/registration">
               报名入口 <i class="el-icon-success"></i> Register Now
             </router-link>
           </el-button>

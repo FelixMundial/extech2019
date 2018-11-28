@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import ExTech from '@/components/ExTech'
-import Register from '@/components/ExTechRegister'
+import RegistrationPage from '@/components/RegistrationPage'
 // import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
@@ -15,9 +15,9 @@ export default new Router({
       component: ExTech
     },
     {
-      path: '/register',
-      name: 'Register',
-      component: Register
+      path: '/registration',
+      name: 'RegistrationPage',
+      component: RegistrationPage
     }
   ]
 })

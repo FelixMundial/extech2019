@@ -7,10 +7,12 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import vueResource from 'vue-resource'
 
+Vue.config.productionTip = false
 Vue.use(Element)
 Vue.use(VueAwesomeSwiper)
-Vue.config.productionTip = false
+Vue.use(vueResource)
 
 /* eslint-disable no-new */
 new Vue({
