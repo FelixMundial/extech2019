@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import vueResource from 'vue-resource'
+import 'lib-flexible'
 
 Vue.config.productionTip = false
 Vue.use(Element)

@@ -1,5 +1,6 @@
 <template>
   <div class="extech-register-container">
+    {{ localInfo }}
     <el-row style="margin-top: 50px">
       <el-col :span=3>
         <div style="height: 500px;">
@@ -18,11 +19,12 @@
         </el-alert>
         <el-form :model="localInfo" :rules="rules" ref="ruleForm" label-width="18rem" class="register-form">
           <el-row>
-            <el-col :span=11>
-              <el-form-item label="Name | 姓名" prop="name">
-                <el-input class="el-input" v-model.trim="localInfo.name"/>
-              </el-form-item>
-            </el-col>
+            <el-form-item label="Name | 姓名" prop="name">
+              <el-input class="el-input" v-model.trim="localInfo.name"/>
+            </el-form-item>
+            <el-form-item label="Email | 邮箱" prop="contact">
+              <el-input class="el-input" v-model.trim="localInfo.contact"/>
+            </el-form-item>
             <!--<el-col :span=8>-->
               <!--<el-form-item label="Gender | 性别">-->
                 <!--<el-select class="el-select" v-model="localInfo.gender">-->
@@ -31,11 +33,6 @@
                 <!--</el-select>-->
               <!--</el-form-item>-->
             <!--</el-col>-->
-            <el-col :span=11>
-              <el-form-item label="Email | 邮箱" prop="contact">
-                <el-input class="el-input" v-model.trim="localInfo.contact"/>
-              </el-form-item>
-            </el-col>
           </el-row>
 
           <el-row>
@@ -70,8 +67,8 @@
           <el-row>
             <el-form-item label="Presentation type | 报告类型" prop="isOral">
               <el-radio-group v-model="localInfo.isOral">
-                <el-radio border label=true>I will present orally | 进行口头报告</el-radio>
-                <el-radio border label=false>I will xxx | 仅进行墙报展示</el-radio>
+                <el-radio style="margin: 2px" border label='true'>I will present orally | 进行口头报告</el-radio>
+                <el-radio style="margin: 2px" border label='false'>I will xxx | 仅进行墙报展示</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-row>
@@ -79,8 +76,8 @@
             <transition name="fade">
               <el-form-item label="" v-if="localInfo.isOral === 'true'" prop="isInEnglish">
                 <el-radio-group v-model="localInfo.isInEnglish">
-                  <el-radio-button label=true>I will present in English</el-radio-button>
-                  <el-radio-button label=false>我将用中文汇报</el-radio-button>
+                  <el-radio-button style="margin: 2px 0" label=true>I will present in English</el-radio-button>
+                  <el-radio-button style="margin: 2px 0" label=false>我将用中文汇报</el-radio-button>
                 </el-radio-group>
               </el-form-item>
             </transition>
@@ -98,17 +95,17 @@
         </el-tag>
         <el-card class="box-card">
           <template>
-            <el-table :data="tableData" style="width: 90%; margin: 0 auto" highlight-current-row :fit="true" max-height="400" tooltip-effect="dark"
+            <el-table :data="tableData" style="width: 90%; margin: 0 auto" highlight-current-row :fit="true" max-height="600" tooltip-effect="dark"
                       ref="multipleTable" @selection-change="handleSelectionChange" @row-click="handleRowSelected">
-              <el-table-column fixed type="selection" width="50">
+              <el-table-column fixed width="50" type="selection">
               </el-table-column>
-              <el-table-column label="预计入住日期" prop="date" sortable>
+              <el-table-column label="预计入住日期" width="200" prop="date" sortable>
                 <template slot-scope="scope">
                   <i class="el-icon-time"></i>
                   <span style="margin-left: 10px">{{ formattedDate(scope.row.date) }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="个人信息" prop="name" sortable>
+              <el-table-column label="个人信息" width="200" prop="name" sortable>
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top">
                     <h1 class="popover-text">姓名: {{ scope.row.name }}</h1>
@@ -124,7 +121,7 @@
                   </el-popover>
                 </template>
               </el-table-column>
-              <el-table-column label="报告名称及类型" prop="presTitle">
+              <el-table-column label="报告名称及类型" width="250" prop="presTitle">
                 <template slot-scope="scope">
                   <el-popover trigger="hover" placement="top">
                     <h1 class="popover-text">报告名称: {{ scope.row.presTitle }}</h1>
@@ -135,12 +132,21 @@
                     <h1 class="popover-text" v-else>报告类型: 墙报</h1>
                     <div slot="reference" class="pres-wrapper">
                       <i class="el-icon-document"></i>
-                      {{ scope.row.presTitle }}
+                      {{ formattedTitle(scope.row.presTitle) }}
                     </div>
                   </el-popover>
                 </template>
               </el-table-column>
-              <el-table-column label="其它备注信息" prop="notes"></el-table-column>
+              <el-table-column label="其它备注信息" width="250" prop="notes">
+                <template slot-scope="scope">
+                  <el-popover trigger="hover" placement="top">
+                    <h1 class="popover-text">{{ scope.row.presTitle }}</h1>
+                    <div slot="reference" class="pres-wrapper">
+                      {{ formattedTitle(scope.row.notes) }}
+                    </div>
+                  </el-popover>
+                </template>
+              </el-table-column>
               <el-table-column fixed="right" label="操作" show-overflow-tooltip>
                 <template slot-scope="item">
                   <el-button type="info" v-if="!isEditMode" size="mini" @click="editQueues(item.$index)">编辑</el-button>
@@ -154,21 +160,33 @@
             <el-button type="primary" v-if="isEditMode" round @click="exitEditMode">退出编辑</el-button>
           </el-row>
           <div style="margin-top: 15px">
-            <el-button @click="resetSort" type="info" plain round>重置排序</el-button>
-            <el-button style="margin-top: 20px" @click="registerMultiple" icon="el-icon-upload2" type="primary" round> 提交报名信息</el-button>
-            <el-button @click="removeSelectedQueues" type="danger" :disabled="this.selectedRows.length === 0" plain round>批量移除</el-button></div>
+            <el-button @click="resetSort" type="info" :disabled="!this.tableData || this.tableData.length <= 1" plain round>重置排序</el-button>
+            <el-button style="margin-top: 20px" @click="registerMultiple" icon="el-icon-upload2" :disabled="!this.tableData || this.tableData.length === 0" type="primary" round> 提交报名信息</el-button>
+            <el-button @click="removeSelectedQueues" type="danger" :disabled="!this.selectedRows || this.selectedRows.length === 0" plain round>批量移除</el-button></div>
         </el-card>
         <el-card class="box-card">
           <el-alert style="margin: 15px" title="摘要文档无需与注册信息同时提交；请将待上传的摘要文档命名为“姓名-报告标题”的格式" type="info" close-text="OK | 知道了"></el-alert>
-          <el-button type="info" icon="el-icon-document" round>
+          <el-button type="info" icon="el-icon-download" round>
             <a class='download' :href='docDownloadUrl' download="" title="摘要模板下载">{{ docNameExtended }}</a>
           </el-button>
-          <el-upload class="upload-section" drag
-                     action="https://jsonplaceholder.typicode.com/posts/" multiple>
+          <!--upload section-->
+          <el-upload ref="upload" class="upload-section" drag action=""
+                     :on-preview="handlePreviewFile" :on-remove="handleRemoveFile"
+                     :on-success = "handleUploadSuccess" :before-upload = "handleBeforeUpload"
+                     :file-list="fileList" :auto-upload="false" multiple
+                     accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <!--<div class="el-upload__tip" slot="tip">只能上传doc/docx/pdf文件，且不超过5M</div>-->
+            <div class="el-upload__tip" slot="tip">
+              <div>只能上传doc/docx/pdf文件，且不超过5M</div>
+              <el-tag type="success" style="margin-top: 3%">
+                <i class="el-icon-document"></i> Uploading queue | 待上传摘要文档列表
+              </el-tag>
+            </div>
           </el-upload>
+          <el-row>
+            <el-button icon="el-icon-upload" type="primary" @click="handleSubmitFile" round>上传</el-button>
+          </el-row>
         </el-card>
       </el-col>
     </el-row>
@@ -189,7 +207,7 @@ export default {
         date: '',
         // gender: '',
         presTitle: '',
-        isOral: true,
+        isOral: 'true',
         isInEnglish: true,
         notes: ''
       },
@@ -198,7 +216,7 @@ export default {
       ],
       isEditMode: false,
       hasEdited: false,
-      selectedRows: [], // used in multiple selections
+      selectedRows: [],
       tableData: [],
       rules: {
         name: [
@@ -221,7 +239,8 @@ export default {
       hasFetched: false,
       fetchedData: [],
       hasFetchedAll: false,
-      docDownloadUrl: '/api/download'
+      docDownloadUrl: '/api/download',
+      fileList: [] // upload files
     }
   },
   computed: {
@@ -238,8 +257,15 @@ export default {
         }
       }
     },
+    formattedTitle () {
+      return (presTitle) => {
+        if (presTitle && presTitle.length >= 50) {
+          return presTitle.substr(0, 50) + '...'
+        }
+      }
+    },
     docNameExtended () {
-      var docName = this.localInfo.name !== '' ? this.localInfo.name + this.localInfo.presTitle : '姓名-报告标题'
+      var docName = this.localInfo.name !== '' ? this.localInfo.name + '-' + this.localInfo.presTitle : '姓名-报告标题'
       return docName + '.docx'
     }
   },
@@ -250,7 +276,7 @@ export default {
         if (valid) {
           console.log('this.localInfo: ')
           console.log(this.localInfo)
-          if (this.tableData !== null | []) {
+          if (this.tableData.length !== 0 && this.tableData !== []) {
             for (var i = 0; i < this.tableData.length; i++) {
               if (this.tableData[i].name === this.localInfo.name) {
                 console.log('old localInfo found.')
@@ -262,10 +288,11 @@ export default {
             if (!this.hasEdited) {
               console.log('old localInfo not found.')
               this.tableData.push(this.localInfo)
+              console.log('localInfo pushed.')
             }
           } else {
             this.tableData.push(this.localInfo)
-            console.log('localInfo pushed.')
+            console.log('initializing... localInfo pushed.')
           }
           localStorage.setItem('tableData', JSON.stringify(this.tableData))
           if (this.isEditMode) {
@@ -508,6 +535,51 @@ export default {
           }
         }
       })
+    },
+    // Dealing with file uploads
+    handleBeforeUpload (file) {
+      var formData = new FormData()
+      formData.append('file', file)
+      this.$http.post('/api/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          if (res.status === 200 && res.body.status === '0') {
+            console.log('res.msg: ' + res.body.msg)
+            console.log('res.result.data: ' + res.body.result.data)
+            this.$message({
+              message: res.body.msg,
+              type: 'success'
+            })
+          } else {
+            console.log('res err, res.msg: ' + res.body.msg)
+            this.$message.error(res.body.msg)
+          }
+        }).catch((err) => {
+          console.log('POST err: ' + err)
+        })
+    },
+    handleSubmitFile () {
+      this.$confirm('此操作将永久删除选中行, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$refs.upload.submit()
+      })
+    },
+    handleRemoveFile (file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreviewFile (file) {},
+    handleUploadSuccess () {
+      this.$message({
+        message: 'Congrats, uploading successful!',
+        type: 'success'
+      })
     }
   },
   watch: {
@@ -527,14 +599,18 @@ export default {
     }
   },
   mounted () {
-    var temp = localStorage.getItem('localInfo')
-    console.log('localInfo in localStorage: ' + temp)
-    if (temp !== null) {
-      this.localInfo = JSON.parse(temp)
+    var temp = JSON.parse(localStorage.getItem('localInfo'))
+    console.log('localInfo in localStorage: ')
+    console.log(temp)
+    if (temp !== null && temp.name !== '') {
+      console.log('localInfo loaded from localStorage')
+      this.localInfo = temp
     }
-    var tempTable = localStorage.getItem('tableData')
-    if (tempTable !== null || []) {
-      this.tableData = JSON.parse(tempTable)
+    var tempTable = JSON.parse(localStorage.getItem('tableData'))
+    // 'tempTable === null || tempTable === []' cannot be used here
+    if (tempTable.length !== 0 && tempTable !== []) {
+      console.log('tempTable loaded from localStorage')
+      this.tableData = tempTable
     }
   }
 }
@@ -556,8 +632,10 @@ export default {
   width: 95%;
   min-height: 250px;
 }
-.popover-text:not(:last-child) {
-  padding: 1rem;
+.popover-text {
+  padding: .6rem;
+}
+.popover-text:not(:last-of-type) {
   border-bottom: 1px solid lightgreen;
 }
 .fade-enter {
