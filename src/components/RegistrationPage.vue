@@ -12,10 +12,13 @@
         </div>
       </el-col>
       <el-col :span=21>
-        <h1><i class="el-icon-document"></i> ExTech 2018 Registration | 报名表</h1>
+        <el-tag type="success"><i class="el-icon-document"></i> ExTech 2018 Registration | 报名表</el-tag>
+        <el-alert style="margin-top: 15px" title="您可以同时完成一至多人的注册信息填写，最后一并提交。"
+                  type="info" close-text="OK | 知道了">
+        </el-alert>
         <el-form :model="localInfo" :rules="rules" ref="ruleForm" label-width="18rem" class="register-form">
           <el-row>
-            <el-col :span=10>
+            <el-col :span=11>
               <el-form-item label="Name | 姓名" prop="name">
                 <el-input class="el-input" v-model.trim="localInfo.name"/>
               </el-form-item>
@@ -28,9 +31,9 @@
                 <!--</el-select>-->
               <!--</el-form-item>-->
             <!--</el-col>-->
-            <el-col :span=14>
+            <el-col :span=11>
               <el-form-item label="Email | 邮箱" prop="contact">
-                <el-input class="el-input" v-model.trim="localInfo.contact"></el-input>
+                <el-input class="el-input" v-model.trim="localInfo.contact"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -86,11 +89,13 @@
           <el-form-item label="Notes | 备注信息">
             <el-input type="textarea" v-model.trim="localInfo.notes"></el-input>
           </el-form-item>
-          <el-button @click="createQueues('ruleForm')" v-if="!isEditMode" type="success" round>Finish current registration | 创建报名信息</el-button>
-          <el-button @click="createQueues('ruleForm')" v-else type="success" round>Edit current registration | 修改报名信息</el-button>
+          <el-button @click="createQueues('ruleForm')" v-if="!isEditMode" icon="el-icon-circle-check-outline" type="success" round> Finish current registration | 创建报名信息</el-button>
+          <el-button @click="createQueues('ruleForm')" v-else type="success" round> Edit current registration | 修改报名信息</el-button>
         </el-form>
 
-        <el-tag type="success" style="margin-top: 3%">Registration queue | 拟提交报名列表</el-tag>
+        <el-tag type="success" style="margin-top: 3%">
+          <i class="el-icon-edit"></i> Registration queue | 拟提交报名列表
+        </el-tag>
         <el-card class="box-card">
           <template>
             <el-table :data="tableData" style="width: 90%; margin: 0 auto" highlight-current-row :fit="true" max-height="400" tooltip-effect="dark"
@@ -150,17 +155,19 @@
           </el-row>
           <div style="margin-top: 15px">
             <el-button @click="resetSort" type="info" plain round>重置排序</el-button>
-            <el-button style="margin-top: 20px" @click="registerMultiple" type="primary" round>提交报名信息</el-button>
-            <el-button @click="removeSelectedQueues" type="danger"
-                       :disabled="this.selectedRows.length === 0" plain round>批量移除</el-button>
-          </div>
+            <el-button style="margin-top: 20px" @click="registerMultiple" icon="el-icon-upload2" type="primary" round> 提交报名信息</el-button>
+            <el-button @click="removeSelectedQueues" type="danger" :disabled="this.selectedRows.length === 0" plain round>批量移除</el-button></div>
         </el-card>
         <el-card class="box-card">
+          <el-alert style="margin: 15px" title="摘要文档无需与注册信息同时提交；请将待上传的摘要文档命名为“姓名-报告标题”的格式" type="info" close-text="OK | 知道了"></el-alert>
+          <el-button type="info" icon="el-icon-document" round>
+            <a class='download' :href='docDownloadUrl' download="" title="摘要模板下载">{{ docNameExtended }}</a>
+          </el-button>
           <el-upload class="upload-section" drag
                      action="https://jsonplaceholder.typicode.com/posts/" multiple>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只能上传doc/docx/pdf文件，且不超过5M</div>
+            <!--<div class="el-upload__tip" slot="tip">只能上传doc/docx/pdf文件，且不超过5M</div>-->
           </el-upload>
         </el-card>
       </el-col>
@@ -195,25 +202,26 @@ export default {
       tableData: [],
       rules: {
         name: [
-          { required: true, message: '请输入姓名', trigger: 'blur' }
+          {required: true, message: '请输入姓名', trigger: 'blur'}
         ],
         contact: [
-          { required: true, message: '请输入有效邮箱地址', trigger: 'blur' }
+          {required: true, message: '请输入有效邮箱地址', trigger: 'blur'}
         ],
         // date: [
         //   { type: 'date', required: true, message: '请选择预计入住日期', trigger: 'change' }
         // ],
         presTitle: [
-          { required: true, message: '请填写报告名称', trigger: 'change' }
+          {required: true, message: '请填写报告名称', trigger: 'change'}
         ],
         isOral: [
-          { required: true, message: '请选择报告类型', trigger: 'change' }
+          {required: true, message: '请选择报告类型', trigger: 'change'}
         ]
       },
       hasFound: false,
       hasFetched: false,
       fetchedData: [],
-      hasFetchedAll: false
+      hasFetchedAll: false,
+      docDownloadUrl: '/api/download'
     }
   },
   computed: {
@@ -229,6 +237,10 @@ export default {
           return date.substr(0, 10)
         }
       }
+    },
+    docNameExtended () {
+      var docName = this.localInfo.name !== '' ? this.localInfo.name + this.localInfo.presTitle : '姓名-报告标题'
+      return docName + '.docx'
     }
   },
   methods: {
@@ -423,11 +435,12 @@ export default {
           }).then(() => {
             this.$http.post('/api/update', params)
               .then((res) => {
-                if (res.body !== '') {
+                if (res.body !== '' && res.body.name === params.name) {
                   console.log('UPDATE successful: ' + Date())
-                  console.log('res.body: ' + res.body)
+                  console.log('res.body: ')
+                  console.log(res.body)
                   this.$message({
-                    message: 'Congrats, updating info successful!',
+                    message: 'Congrats, registration successful!',
                     type: 'success'
                   })
                 } else {
@@ -449,9 +462,10 @@ export default {
           console.log(res.body)
           this.$http.post('/api/register', params)
             .then((res) => {
-              if (res.body !== '') {
+              if (res.body !== '' && res.body.name === params.name) {
                 console.log('POST successful: ' + Date())
-                console.log('registerCore (): ' + res.body)
+                console.log('res.body: ')
+                console.log(res.body)
                 this.$message({
                   message: 'Congrats, registration successful!',
                   type: 'success'

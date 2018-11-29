@@ -26,7 +26,8 @@ router.post('/api/register', (req, res, next) => {
       res.send(err)
     } else {
       console.log('POST successfully in info.save: ' + Date())
-      console.log('POST data: ' + data)
+      console.log('POST data: ')
+      console.log(data)
       res.send(data)
     }
   })
@@ -40,7 +41,8 @@ router.post('/api/search', (req, res, next) => {
       res.send('GET: ' + err)
     } else {
       console.log('GET successful: ' + Date())
-      console.log('GET data: ' + data)
+      console.log('GET data: ')
+      console.log(data)
       res.send(data)
     }
   })
@@ -61,7 +63,8 @@ router.post('/api/update', (req, res, next) => {
       res.send(err)
     } else {
       console.log('UPDATE successful: ' + Date())
-      console.log('UPDATE data: ' + data)
+      console.log('UPDATE data: ')
+      console.log(data)
       res.send(data)
     }
   })
@@ -75,10 +78,31 @@ router.get('/api/getAll', (req, res, next) => {
       res.send(err)
     } else {
       console.log('Info successfully retrieved: ' + Date())
-      console.log(data + ': ' + data)
+      console.log('GETALL: ')
+      console.log(data)
       res.send(data)
     }
   })
+})
+
+router.get('/api/download', (req, res, next) => {
+  console.warn('/api/download')
+  // var outputName = req.query.name
+  var filePath = path.join(__dirname, '../dist/static/files/' + 'test' + '.docx');
+  var stats = fs.statSync(filePath);
+  var isFile = stats.isFile();
+  var docType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  var docxType = '\tapplication/msword'
+  if(isFile){
+    res.set({
+      'Content-Type': docxType,
+      'Content-Disposition': 'attachment; filename=' + 'demo' + '.docx',
+      'Content-Length': stats.size
+    });
+    fs.createReadStream(filePath).pipe(res);
+  } else {
+    res.end(404);
+  }
 })
 
 module.exports = router
