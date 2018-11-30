@@ -9,13 +9,13 @@
             </router-link>
           </div>
         </el-col>
-        <el-col span=20>
+        <el-col :span=20>
           <el-row type="flex" justify="end">
-            <el-col :span=4>
+            <el-col :span=8>
               <el-dropdown>
                   <span class="el-dropdown-link">
                     <i class="el-icon-question"></i>
-                    <span v-show="visibleResponsively"> Contact Us</span><i class="el-icon-arrow-down el-icon--right"></i>
+                    <span> Contact Us</span><i class="el-icon-arrow-down el-icon--right"></i>
                   </span>
                 <el-dropdown-menu slot="dropdown" class="el-dropdown-menu">
                   <el-dropdown-item class="el-dropdown-item"><i class="el-icon-message"></i> <el-tag type="success">cesoygf@sysu.edu.cn</el-tag></el-dropdown-item>
@@ -45,18 +45,18 @@
 
 <script>
 export default {
-  name: 'App',
-  data () {
-    return {
-      visibleResponsively: true
-    }
-  },
-  mounted () {
-    let width = document.documentElement.offsetWidth || document.body.offsetWidth
-    if (width < 1000) {
-      this.visibleResponsively = false
-    }
-  }
+  name: 'App'
+  // data () {
+  //   return {
+  //     visibleResponsively: true
+  //   }
+  // },
+  // mounted () {
+  //   let width = document.documentElement.offsetWidth || document.body.offsetWidth
+  //   if (width < 1000) {
+  //     this.visibleResponsively = false
+  //   }
+  // }
 }
 </script>
 

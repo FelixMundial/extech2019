@@ -34,7 +34,7 @@
       <div class="swiper-scrollbar"   slot="scrollbar"></div>
     </swiper>
     <el-card class="box-card">
-      <div v-for="o in 4" :key="o" class="text item">
+      <div style="margin: 10px" v-for="o in 4" :key="o" class="text item">
         {{'列表内容 ' + o }}
       </div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -142,8 +142,8 @@ export default {
   padding: .1rem .5rem;
 }
 .box-card {
-  margin: 1rem;
+  margin: 15px auto;
   border-radius: 5px;
-  width: 98%;
+  width: 95%;
 }
 </style>

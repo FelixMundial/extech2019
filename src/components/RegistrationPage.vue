@@ -6,8 +6,8 @@
         <div style="height: 500px;">
           <el-steps direction="vertical" :space="400" :active="activeStep" finish-status="success" process-status="process">
             <el-step class="el-step-item" title="填写个人报名信息"></el-step>
-            <el-step class="el-step-item" title="确认信息是否无误" description="确认是否需要填写其他与会人员信息"></el-step>
-            <el-step class="el-step-item" title="提交与会摘要"></el-step>
+            <el-step class="el-step-item" title="提交个人报名信息" description="确认信息是否无误"></el-step>
+            <el-step class="el-step-item" title="下载与会摘要模板，填写后在线提交"></el-step>
             <el-step class="el-step-item" title="报名完成！请查收自动回复邮件:)"></el-step>
           </el-steps>
         </div>
@@ -254,6 +254,8 @@ export default {
       return (date) => {
         if (date && date.length >= 10) {
           return date.substr(0, 10)
+        } else {
+          return date
         }
       }
     },
@@ -261,6 +263,8 @@ export default {
       return (presTitle) => {
         if (presTitle && presTitle.length >= 50) {
           return presTitle.substr(0, 50) + '...'
+        } else {
+          return presTitle
         }
       }
     },
@@ -522,18 +526,19 @@ export default {
         if (this.selectedRows.length === 0) {
           this.tableData.forEach(async (item, index) => {
             await this.register(item)
-            // this.tableData.splice(index, 1)
+            this.tableData.splice(index, 1)
           })
         } else {
           for (var i = 0; i < this.selectedRows.length; i++) {
             for (var j = 0; j < this.tableData.length; j++) {
               if (this.selectedRows[i] === this.tableData[j]) {
                 await this.register(this.tableData[j])
-                // this.tableData.splice(j, 1)
+                this.tableData.splice(j, 1)
               }
             }
           }
         }
+        this.activeStep = 2
       })
     },
     // Dealing with file uploads
@@ -579,6 +584,8 @@ export default {
       this.$message({
         message: 'Congrats, uploading successful!',
         type: 'success'
+      }).then(() => {
+        this.activeStep = 3
       })
     }
   },
