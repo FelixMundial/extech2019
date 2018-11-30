@@ -147,7 +147,7 @@
                   </el-popover>
                 </template>
               </el-table-column>
-              <el-table-column fixed="right" label="操作" show-overflow-tooltip>
+              <el-table-column fixed="right" label="操作" width="150" show-overflow-tooltip>
                 <template slot-scope="item">
                   <el-button type="info" v-if="!isEditMode" size="mini" @click="editQueues(item.$index)">编辑</el-button>
                   <el-button type="primary" v-else size="mini" @click="exitEditMode">退出编辑</el-button>
@@ -185,7 +185,7 @@
             </div>
           </el-upload>
           <el-row>
-            <el-button icon="el-icon-upload" type="primary" @click="handleSubmitFile" round>上传</el-button>
+            <el-button icon="el-icon-upload" type="primary" @click="handleSubmitFile" round>Upload | 上传</el-button>
           </el-row>
         </el-card>
       </el-col>
@@ -240,7 +240,8 @@ export default {
       fetchedData: [],
       hasFetchedAll: false,
       docDownloadUrl: '/api/download',
-      fileList: [] // upload files
+      fileList: [], // upload files,
+      successFlag: false
     }
   },
   computed: {
@@ -441,7 +442,7 @@ export default {
     },
 
     // Submit registration info(s) to server
-    register (data) {
+    register (data, callback) {
       let params = {
         name: data.name.replace(/\s+/g, ' '),
         contact: data.contact.replace(/\s+/g, ''),
@@ -456,6 +457,7 @@ export default {
         notes: data.notes.trim()
       }
       this.$http.post('/api/search', params).then((res) => {
+        console.log('1')
         if (res.body !== '') {
           console.log('res.body: ')
           console.log(res.body)
@@ -464,18 +466,21 @@ export default {
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
+            console.log('2')
             this.$http.post('/api/update', params)
               .then((res) => {
-                if (res.body !== '' && res.body.name === params.name) {
+                console.log('3')
+                if (res.body !== '' && res.ok) {
                   console.log('UPDATE successful: ' + Date())
                   console.log('res.body: ')
                   console.log(res.body)
                   this.$message({
-                    message: 'Congrats, registration successful!',
+                    message: 'Congrats, update successful!',
                     type: 'success'
                   })
+                  this.successFlag = true
                 } else {
-                  this.$confirm('Server not running normal in updating! Try again later please', 'Error', {
+                  this.$confirm('Server not running normal in update! Try again later please', 'Error', {
                     confirmButtonText: 'OK',
                     type: 'warning'
                   })
@@ -501,6 +506,7 @@ export default {
                   message: 'Congrats, registration successful!',
                   type: 'success'
                 })
+                this.successFlag = true
               } else {
                 this.$confirm('Server not running normal in registration! Try again later please', 'Error', {
                   confirmButtonText: 'OK',
@@ -516,41 +522,65 @@ export default {
             })
         }
       })
+      callback(this.successFlag)
     },
     registerMultiple () {
       this.$confirm('您将提交指定注册信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'info'
-      }).then(async () => {
-        if (this.selectedRows.length === 0) {
-          this.tableData.forEach(async (item, index) => {
-            await this.register(item)
-            this.tableData.splice(index, 1)
-          })
-        } else {
-          for (var i = 0; i < this.selectedRows.length; i++) {
-            for (var j = 0; j < this.tableData.length; j++) {
-              if (this.selectedRows[i] === this.tableData[j]) {
-                await this.register(this.tableData[j])
-                this.tableData.splice(j, 1)
+      }).then(() => {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Submitting'
+        })
+        setTimeout(() => {
+          loading.close()
+          if (this.selectedRows.length === 0) {
+            this.tableData.forEach((item, index) => {
+              this.successFlag = false
+              this.register(item, (flag) => {
+                console.log('4')
+                console.log(flag)
+                if (flag) {
+                  this.tableData.splice(index, 1)
+                }
+              })
+            })
+          } else {
+            for (var i = 0; i < this.selectedRows.length; i++) {
+              for (var j = 0; j < this.tableData.length; j++) {
+                if (this.selectedRows[i] === this.tableData[j]) {
+                  this.successFlag = false
+                  this.register(this.tableData[j], (flag) => {
+                    if (this.successFlag) {
+                      this.tableData.splice(j, 1)
+                    }
+                  })
+                }
               }
             }
           }
-        }
-        this.activeStep = 2
+          this.activeStep = 2
+        }, 1000)
       })
     },
     // Dealing with file uploads
     handleBeforeUpload (file) {
-      var formData = new FormData()
-      formData.append('file', file)
-      this.$http.post('/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+      const loading = this.$loading({
+        lock: true,
+        text: 'Uploading',
+        background: 'rgba(0, 0, 0, 0.7)'
       })
-        .then((res) => {
+      setTimeout(() => {
+        loading.close()
+        var formData = new FormData()
+        formData.append('file', file)
+        this.$http.post('/api/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then((res) => {
           console.log(res)
           if (res.status === 200 && res.body.status === '0') {
             console.log('res.msg: ' + res.body.msg)
@@ -566,9 +596,10 @@ export default {
         }).catch((err) => {
           console.log('POST err: ' + err)
         })
+      }, 2000)
     },
     handleSubmitFile () {
-      this.$confirm('此操作将永久删除选中行, 是否继续?', '提示', {
+      this.$confirm('此操作将提交所上传的摘要, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

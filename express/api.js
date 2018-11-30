@@ -88,7 +88,7 @@ router.get('/api/getAll', (req, res, next) => {
 router.get('/api/download', (req, res, next) => {
   console.warn('/api/download')
   // var outputName = req.query.name
-  var filePath = path.join(__dirname, '../dist/static/files/' + 'test' + '.docx')
+  var filePath = path.join(__dirname, '../dist/static/files/' + 'demo' + '.docx')
   var stats = fs.statSync(filePath)
   var isFile = stats.isFile()
   var docxType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
