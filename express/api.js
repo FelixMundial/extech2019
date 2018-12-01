@@ -28,6 +28,7 @@ router.post('/api/register', (req, res, next) => {
       console.log('POST successfully in info.save: ' + Date())
       console.log('POST data: ')
       console.log(data)
+      sendMail(req)
       res.send(data)
     }
   })
@@ -66,6 +67,7 @@ router.post('/api/update', (req, res, next) => {
       console.log('UPDATE data: ')
       console.log(data)
       res.send(data)
+      sendMail(req)
     }
   })
 })
@@ -144,5 +146,39 @@ router.post('/api/upload', (req, res, next) => {
     })
   })
 })
+
+function sendMail (params) {
+  //  Sending a reply mail
+  const nodemailer = require('nodemailer')
+  let name = params.name === null ? '' : params.name
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.exmail.qq.com',
+    port: 465,
+    secureConnection: true,
+    auth: {
+      user: 'xxxx@mail.sysu.edu.cn',
+      pass: ''
+    }
+  })
+  // // Already tested, ok
+  // transporter.verify(function (error, success) {
+  //   if (error) {
+  //     console.log(error)
+  //   } else {
+  //     console.log('Server is ready to take our messages')
+  //   }
+  // })
+  let mailOptions = {
+    from: 'xxxx@mail.sysu.edu.cn',
+    to: params.contact,
+    Subject: 'Hello ' + name,
+    html: '<b>Hola!</b>'
+  }
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log('err in sendMail: ' + err)
+    }
+  })
+}
 
 module.exports = router

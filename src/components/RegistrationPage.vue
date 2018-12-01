@@ -13,7 +13,7 @@
         </div>
       </el-col>
       <el-col :span=21>
-        <el-tag type="success"><i class="el-icon-document"></i> ExTech 2018 Registration | 报名表</el-tag>
+        <el-tag type="success"><i class="el-icon-document"></i> ExTech 2019 Registration | 报名表</el-tag>
         <el-alert style="margin-top: 15px" title="您可以同时完成一至多人的注册信息填写，最后一并提交。"
                   type="info" close-text="OK | 知道了">
         </el-alert>
@@ -281,7 +281,7 @@ export default {
           console.log('this.localInfo: ')
           console.log(this.localInfo)
           if (this.tableData.length !== 0 && this.tableData !== []) {
-            for (var i = 0; i < this.tableData.length; i++) {
+            for (let i = 0; i < this.tableData.length; i++) {
               if (this.tableData[i].name === this.localInfo.name) {
                 console.log('old localInfo found.')
                 this.tableData[i] = this.localInfo
@@ -461,7 +461,7 @@ export default {
         if (res.body !== '') {
           console.log('res.body: ')
           console.log(res.body)
-          this.$confirm('重复条目, 是否覆盖先前注册信息?', '提示', {
+          this.$confirm('发现重复报名信息, 是否覆盖先前注册信息?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
@@ -472,9 +472,8 @@ export default {
                   console.log('UPDATE successful: ' + Date())
                   console.log('res.body: ')
                   console.log(res.body)
-                  this.$message({
-                    message: 'Congrats, update successful!',
-                    type: 'success'
+                  this.$alert('恭喜，' + this.tableData[0].name + '！注册信息修改成功，请查收邮件回复', '提交成功', {
+                    confirmButtonText: '确定'
                   })
                   isSuccessful = true
                 } else {
@@ -500,9 +499,8 @@ export default {
                 console.log('POST successful: ' + Date())
                 console.log('res.body: ')
                 console.log(res.body)
-                this.$message({
-                  message: 'Congrats, registration successful!',
-                  type: 'success'
+                this.$alert('恭喜，' + this.tableData[0].name + '！注册信息提交成功，请查收邮件回复', '提交成功', {
+                  confirmButtonText: '确定'
                 })
                 isSuccessful = true
               } else {
@@ -620,9 +618,8 @@ export default {
     },
     handlePreviewFile (file) {},
     handleUploadSuccess () {
-      this.$message({
-        message: 'Congrats, uploading successful!',
-        type: 'success'
+      this.$alert('恭喜！摘要文档提交成功', '提交成功', {
+        confirmButtonText: '确定'
       }).then(() => {
         this.activeStep = 3
       })
