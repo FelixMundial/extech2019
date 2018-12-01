@@ -240,7 +240,7 @@ export default {
       fetchedData: [],
       hasFetchedAll: false,
       docDownloadUrl: '/api/download',
-      fileList: [], // upload files,
+      fileList: [] // upload files,
     }
   },
   computed: {

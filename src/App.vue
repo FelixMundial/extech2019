@@ -11,7 +11,7 @@
         </el-col>
         <el-col :span=20>
           <el-row type="flex" justify="end">
-            <el-col :span=8>
+            <el-col :span=5>
               <el-dropdown>
                   <span class="el-dropdown-link">
                     <i class="el-icon-question"></i>
@@ -90,10 +90,9 @@ export default {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-    font-size: 1em !important;
+    font-size: .9rem !important;
   }
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure,
