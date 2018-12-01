@@ -241,7 +241,6 @@ export default {
       hasFetchedAll: false,
       docDownloadUrl: '/api/download',
       fileList: [], // upload files,
-      successFlag: false
     }
   },
   computed: {
@@ -443,6 +442,8 @@ export default {
 
     // Submit registration info(s) to server
     register (data, callback) {
+      let hasFinished = false
+      let isSuccessful = false
       let params = {
         name: data.name.replace(/\s+/g, ' '),
         contact: data.contact.replace(/\s+/g, ''),
@@ -457,7 +458,6 @@ export default {
         notes: data.notes.trim()
       }
       this.$http.post('/api/search', params).then((res) => {
-        console.log('1')
         if (res.body !== '') {
           console.log('res.body: ')
           console.log(res.body)
@@ -466,10 +466,8 @@ export default {
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            console.log('2')
             this.$http.post('/api/update', params)
               .then((res) => {
-                console.log('3')
                 if (res.body !== '' && res.ok) {
                   console.log('UPDATE successful: ' + Date())
                   console.log('res.body: ')
@@ -478,7 +476,7 @@ export default {
                     message: 'Congrats, update successful!',
                     type: 'success'
                   })
-                  this.successFlag = true
+                  isSuccessful = true
                 } else {
                   this.$confirm('Server not running normal in update! Try again later please', 'Error', {
                     confirmButtonText: 'OK',
@@ -506,7 +504,7 @@ export default {
                   message: 'Congrats, registration successful!',
                   type: 'success'
                 })
-                this.successFlag = true
+                isSuccessful = true
               } else {
                 this.$confirm('Server not running normal in registration! Try again later please', 'Error', {
                   confirmButtonText: 'OK',
@@ -521,8 +519,21 @@ export default {
               })
             })
         }
+        hasFinished = true
+      }).catch((err) => {
+        console.log('GET failed: ' + err)
+        this.$message({
+          message: 'Sorry, database down! Please contact us!',
+          type: 'warning'
+        })
       })
-      callback(this.successFlag)
+      // Guaranteed to callback only after HTTP request returns
+      setInterval(() => {
+        if (hasFinished) {
+          clearInterval()
+          callback(isSuccessful)
+        }
+      }, 1000)
     },
     registerMultiple () {
       this.$confirm('您将提交指定注册信息, 是否继续?', '提示', {
@@ -538,22 +549,19 @@ export default {
           loading.close()
           if (this.selectedRows.length === 0) {
             this.tableData.forEach((item, index) => {
-              this.successFlag = false
+              // Callback when HTTP request finishes
               this.register(item, (flag) => {
-                console.log('4')
-                console.log(flag)
                 if (flag) {
                   this.tableData.splice(index, 1)
                 }
               })
             })
           } else {
-            for (var i = 0; i < this.selectedRows.length; i++) {
-              for (var j = 0; j < this.tableData.length; j++) {
+            for (let i = 0; i < this.selectedRows.length; i++) {
+              for (let j = 0; j < this.tableData.length; j++) {
                 if (this.selectedRows[i] === this.tableData[j]) {
-                  this.successFlag = false
                   this.register(this.tableData[j], (flag) => {
-                    if (this.successFlag) {
+                    if (flag) {
                       this.tableData.splice(j, 1)
                     }
                   })
