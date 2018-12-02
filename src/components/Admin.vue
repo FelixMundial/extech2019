@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-card class="box-card">
+      <el-tag type="danger" style="margin-top: 3%">Database entries</el-tag>
       <template>
         <el-table :data="tableData" style="width: 90%; margin: 0 auto" highlight-current-row :fit="true" max-height="600" tooltip-effect="dark"
                   ref="multipleTable" @selection-change="handleSelectionChange" @row-click="handleRowSelected">
@@ -125,7 +126,7 @@ export default {
 </script>
 
 <style scoped>
-.el-table-display {
-  margin: 1rem auto;
+.box-card {
+  margin: 0 1rem;
 }
 </style>
