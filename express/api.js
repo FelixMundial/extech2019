@@ -28,8 +28,8 @@ router.post('/api/register', (req, res, next) => {
       console.log('POST successfully in info.save: ' + Date())
       console.log('POST data: ')
       console.log(data)
-      sendMail(req)
       res.send(data)
+      sendMail(req)
     }
   })
 })
@@ -90,7 +90,7 @@ router.get('/api/getAll', (req, res, next) => {
 router.get('/api/download', (req, res, next) => {
   console.warn('/api/download')
   // var outputName = req.query.name
-  var filePath = path.join(__dirname, '../dist/static/files/' + 'demo' + '.docx')
+  var filePath = path.join(__dirname, '../dist/template/' + 'demo' + '.docx')
   var stats = fs.statSync(filePath)
   var isFile = stats.isFile()
   var docxType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'

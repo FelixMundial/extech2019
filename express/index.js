@@ -18,7 +18,8 @@ app.use('*', (req, res, next) => {
   res.send(home)
 })
 
-app.listen(3000)
-console.log('Express listening at port 3000')
+app.listen(3000, () => {
+  console.log('Express listening at port 3000')
+})
 
 module.exports = app
