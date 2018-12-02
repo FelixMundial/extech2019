@@ -56,7 +56,8 @@
             <transition name="fade">
               <el-form-item label="" required>
                 <el-form-item prop="date">
-                  <el-date-picker type="date" placeholder="Scheduled date of arrival | 预计入住日期" v-model="localInfo.date" style="width: 100%;"></el-date-picker>
+                  <el-date-picker type="date" placeholder="Scheduled date of arrival | 预计入住日期"
+                                  value-format="yyyy-MM-dd" v-model="localInfo.date" style="width: 100%;"></el-date-picker>
                 </el-form-item>
               </el-form-item>
             </transition>
@@ -107,7 +108,7 @@
               <el-table-column label="预计入住日期" width="200" prop="date" sortable>
                 <template slot-scope="scope">
                   <i class="el-icon-time"></i>
-                  <span style="margin-left: 10px">{{ formattedDate(scope.row.date) }}</span>
+                  <span style="margin-left: 10px">{{ scope.row.date }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="个人信息" width="200" prop="name" sortable>
@@ -252,15 +253,15 @@ export default {
         return contact.replace(/\s+/g, '')
       }
     },
-    formattedDate () {
-      return (date) => {
-        if (date && date.length >= 10) {
-          return date.substr(0, 10)
-        } else {
-          return date
-        }
-      }
-    },
+    // formattedDate () {
+    //   return (date) => {
+    //     if (date && date.length >= 10) {
+    //       return date.substr(0, 10)
+    //     } else {
+    //       return date
+    //     }
+    //   }
+    // },
     formattedTitle () {
       return (presTitle) => {
         if (presTitle && presTitle.length >= 50) {
@@ -471,13 +472,15 @@ export default {
             this.$http.post('/api/update', params)
               .then((res) => {
                 if (res.body !== '' && res.ok) {
-                  console.log('UPDATE successful: ' + Date())
-                  console.log('res.body: ')
-                  console.log(res.body)
-                  this.$alert('恭喜，' + this.tableData[0].name + '！注册信息修改成功，请查收邮件回复', '提交成功', {
-                    confirmButtonText: '确定'
+                  this.$confirm('恭喜，' + this.tableData[0].name + '！注册信息修改成功，请查收邮件回复', '提交成功', {
+                    confirmButtonText: 'OK',
+                    type: 'success'
+                  }).then(() => {
+                    console.log('UPDATE successful: ' + Date())
+                    console.log('res.body: ')
+                    console.log(res.body)
+                    isSuccessful = true
                   })
-                  isSuccessful = true
                 } else {
                   this.$confirm('Server not running normal in update! Try again later please', 'Error', {
                     confirmButtonText: 'OK',
@@ -498,13 +501,15 @@ export default {
           this.$http.post('/api/register', params)
             .then((res) => {
               if (res.body !== '' && res.body.name === params.name) {
-                console.log('POST successful: ' + Date())
-                console.log('res.body: ')
-                console.log(res.body)
-                this.$alert('恭喜，' + this.tableData[0].name + '！注册信息提交成功，请查收邮件回复', '提交成功', {
-                  confirmButtonText: '确定'
+                this.$confirm('恭喜，' + this.tableData[0].name + '！注册信息提交成功，请查收邮件回复', '提交成功', {
+                  confirmButtonText: 'OK',
+                  type: 'success'
+                }).then(() => {
+                  console.log('POST successful: ' + Date())
+                  console.log('res.body: ')
+                  console.log(res.body)
+                  isSuccessful = true
                 })
-                isSuccessful = true
               } else {
                 this.$confirm('Server not running normal in registration! Try again later please', 'Error', {
                   confirmButtonText: 'OK',

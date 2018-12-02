@@ -29,7 +29,7 @@ router.post('/api/register', (req, res, next) => {
       console.log('POST data: ')
       console.log(data)
       res.send(data)
-      sendMail(req)
+      sendMail(req.body)
     }
   })
 })
@@ -51,6 +51,7 @@ router.post('/api/search', (req, res, next) => {
 
 router.post('/api/update', (req, res, next) => {
   console.warn('info.set() called')
+  // update() is deprecated, consider using updateOne()
   infoModel.Info.update({name: req.body.name}, {$set: {contact: req.body.contact,
     needsAccom: req.body.needsAccom,
     demandsSingle: req.body.demandsSingle,
@@ -67,7 +68,7 @@ router.post('/api/update', (req, res, next) => {
       console.log('UPDATE data: ')
       console.log(data)
       res.send(data)
-      sendMail(req)
+      sendMail(req.body)
     }
   })
 })
@@ -171,7 +172,7 @@ function sendMail (params) {
   let mailOptions = {
     from: 'xxxx@mail.sysu.edu.cn',
     to: params.contact,
-    Subject: 'Hello ' + name,
+    subject: 'Hello ' + name,
     html: '<b>Hola!</b>'
   }
   transporter.sendMail(mailOptions, (err, info) => {
