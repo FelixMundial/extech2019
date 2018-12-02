@@ -81,8 +81,6 @@ router.get('/api/getAll', (req, res, next) => {
       res.send(err)
     } else {
       console.log('Info successfully retrieved: ' + Date())
-      console.log('GETALL: ')
-      console.log(data)
       res.send(data)
     }
   })

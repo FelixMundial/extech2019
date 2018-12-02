@@ -65,7 +65,7 @@
 
           <el-row>
             <el-form-item label="Presentation title | 报告名称" prop="presTitle" :rules="[
-            {required: true, message: '请输入有效邮箱地址', trigger: 'blur'},
+            {required: true, message: '请输入报告标题', trigger: 'blur'},
             ]">
               <el-input type="textarea" v-model.trim="localInfo.presTitle"></el-input>
             </el-form-item>

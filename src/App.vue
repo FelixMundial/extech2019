@@ -4,7 +4,8 @@
       <el-row type="flex" justify="space-between" class="app-header-el-row">
         <el-col :span=4>
           <div class="app-header-logo-area">
-            <router-link :to="{path:'/', query: {activeMenuIndex: 1}}">
+            <!--<router-link :to="{path:'/', query: {activeMenuIndex: 1}}">-->
+            <router-link to='/'>
               <img class="app-header-logo" src="./assets/logo.png">
             </router-link>
           </div>
@@ -12,6 +13,9 @@
         <el-col :span=20>
           <el-row type="flex" justify="end">
             <el-col :span=5>
+              <router-link to='/admin'>
+                <i class="el-icon-setting"></i>
+              </router-link>
               <el-dropdown>
                   <span class="el-dropdown-link">
                     <i class="el-icon-question"></i>
