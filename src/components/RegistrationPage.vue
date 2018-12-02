@@ -22,7 +22,10 @@
             <el-form-item label="Name | 姓名" prop="name">
               <el-input class="el-input" v-model.trim="localInfo.name"/>
             </el-form-item>
-            <el-form-item label="Email | 邮箱" prop="contact">
+            <el-form-item label="Email | 邮箱" prop="contact" :rules="[
+            {required: true, message: '请输入有效邮箱地址', trigger: 'blur'},
+            {type: 'email', message: '邮箱地址不正确！', trigger: 'blur, change'}
+            ]">
               <el-input class="el-input" v-model.trim="localInfo.contact"/>
             </el-form-item>
             <!--<el-col :span=8>-->
@@ -60,7 +63,9 @@
           </el-row>
 
           <el-row>
-            <el-form-item label="Presentation title | 报告名称" prop="presTitle">
+            <el-form-item label="Presentation title | 报告名称" prop="presTitle" :rules="[
+            {required: true, message: '请输入有效邮箱地址', trigger: 'blur'},
+            ]">
               <el-input type="textarea" v-model.trim="localInfo.presTitle"></el-input>
             </el-form-item>
           </el-row>
@@ -126,7 +131,7 @@
                   <el-popover trigger="hover" placement="top">
                     <h1 class="popover-text">报告名称: {{ scope.row.presTitle }}</h1>
                     <h1 class="popover-text" v-if="scope.row.isOral">报告类型: 口头报告
-                      <b v-if="scope.row.isInEnglish"> - English</b>
+                      <b v-if="scope.row.isInEnglish === true"> - English</b>
                       <b v-else> - 中文</b>
                     </h1>
                     <h1 class="popover-text" v-else>报告类型: 墙报</h1>
@@ -221,9 +226,6 @@ export default {
       rules: {
         name: [
           {required: true, message: '请输入姓名', trigger: 'blur'}
-        ],
-        contact: [
-          {required: true, message: '请输入有效邮箱地址', trigger: 'blur'}
         ],
         // date: [
         //   { type: 'date', required: true, message: '请选择预计入住日期', trigger: 'change' }
