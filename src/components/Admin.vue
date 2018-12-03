@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <el-card class="box-card">
-      <el-tag type="danger" style="margin-top: 3%">Database entries</el-tag>
+  <div class="database-container">
+    <div style="margin-top: 50px"></div>
+    <el-card>
       <template>
+        <el-tag type="danger">Database entries</el-tag>
         <el-table :data="tableData" style="width: 90%; margin: 0 auto" highlight-current-row :fit="true" max-height="600" tooltip-effect="dark"
                   ref="multipleTable" @selection-change="handleSelectionChange" @row-click="handleRowSelected">
           <el-table-column fixed width="50" type="selection">
@@ -62,12 +63,12 @@
           </el-table-column>
         </el-table>
       </template>
-      <div style="margin-top: 20px">
-        <el-button @click="resetSort" type="info" plain round>重置排序</el-button>
-        <el-button click="" :disabled="this.selectedRows.length === 0" round>取消选择</el-button>
-        <el-button click="" type="danger" plain round>批量移除</el-button>
-      </div>
     </el-card>
+    <div style="margin-top: 20px">
+      <el-button @click="resetSort" type="info" plain round>重置排序</el-button>
+      <el-button click="" :disabled="this.selectedRows.length === 0" round>取消选择</el-button>
+      <el-button click="" type="danger" plain round>批量移除</el-button>
+    </div>
   </div>
 </template>
 
@@ -126,7 +127,7 @@ export default {
 </script>
 
 <style scoped>
-.box-card {
-  margin: 0 1rem;
+.database-container {
+  margin: 0 2rem;
 }
 </style>

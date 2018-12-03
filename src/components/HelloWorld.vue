@@ -9,7 +9,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to ExTech 2019'
+      msg: 'Welcome to Index 2019'
     }
   }
 }

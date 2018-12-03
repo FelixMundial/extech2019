@@ -1,7 +1,6 @@
 <template>
   <div class="extech-register-container">
-    {{ localInfo }}
-    <el-row style="margin-top: 50px">
+    <el-row style="margin-top: 75px">
       <el-col :span=3>
         <div style="height: 500px;">
           <el-steps direction="vertical" :space="400" :active="activeStep" finish-status="success" process-status="process">
@@ -598,9 +597,10 @@ export default {
           if (res.status === 200 && res.body.status === '0') {
             console.log('res.msg: ' + res.body.msg)
             console.log('res.result.data: ' + res.body.result.data)
-            this.$message({
-              message: res.body.msg,
-              type: 'success'
+            this.$alert('恭喜！摘要文档提交成功', '提交成功', {
+              confirmButtonText: '确定'
+            }).then(() => {
+              this.activeStep = 3
             })
           } else {
             console.log('res err, res.msg: ' + res.body.msg)
@@ -624,13 +624,7 @@ export default {
       console.log(file, fileList)
     },
     handlePreviewFile (file) {},
-    handleUploadSuccess () {
-      this.$alert('恭喜！摘要文档提交成功', '提交成功', {
-        confirmButtonText: '确定'
-      }).then(() => {
-        this.activeStep = 3
-      })
-    }
+    handleUploadSuccess () {}
   },
   watch: {
     localInfo: {
