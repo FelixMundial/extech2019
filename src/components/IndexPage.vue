@@ -61,7 +61,7 @@
       </el-row>
       <!--welcome-->
       <el-row>
-        <div class="extech-title">Welcome to ExTech 2019!</div>
+        <div class="extech-title"><i class="icon iconfont icon-huanyingye"></i> Welcome to ExTech 2019!</div>
       </el-row>
       <el-card class="box-card">
         <div class="welcome-title">{{ welcomeTitle }}</div>
@@ -72,13 +72,13 @@
       <!--sponsors-->
       <div class="box-card">
         <el-row>
-          <div class="extech-title"><img style="margin-top: 20px" src="../assets/icons/icon_registration.png">Sponsors</div>
+          <div class="extech-title"><i class="icon iconfont icon-sponsor"></i> Sponsors</div>
         </el-row>
         <el-row>
-          <el-col v-for="o in 10" :key="o" style="margin: 40px; width: 400px">
+          <el-col v-for="(o, index) in 10" :key="o" style="margin: 40px; width: 400px">
             <el-card>
               <img src="../assets/logos/icon_org_SYSU.png">
-              <div style="padding: 14px;">赞助商</div>
+              <div style="padding: 14px;">赞助商{{ index + 1 }}</div>
             </el-card>
           </el-col>
         </el-row>
@@ -224,5 +224,8 @@ Looking forward to welcoming you in Guangzhou in November 2015!`, `Hey`],
   /*margin-left: 1em;*/
   font-size: 300%;
   font-family: Augusta,serif;
+}
+.icon {
+  font-size: 30px !important;
 }
 </style>

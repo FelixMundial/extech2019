@@ -21,7 +21,7 @@
                   <span> Contact Us</span><i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown" class="el-dropdown-menu">
-                  <el-dropdown-item class="el-dropdown-item"><i class="el-icon-message"></i> <el-tag type="success">cesoygf@mail.sysu.edu.cn</el-tag></el-dropdown-item>
+                  <el-dropdown-item class="el-dropdown-item"><i class="el-icon-message"></i> <el-tag type="success">extech2019@mail.sysu.edu.cn</el-tag></el-dropdown-item>
                   <el-dropdown-item class="el-dropdown-item"><i class="el-icon-phone-outline"></i> <el-tag type="info">+86 (020) 84110953</el-tag></el-dropdown-item>
                   <el-dropdown-item class="el-dropdown-item">
                     <router-link :to="{path:'/contact', query: {activeName: 'third', activeMenuIndex: '3-3'}}">

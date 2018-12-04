@@ -2,7 +2,7 @@
   <div class="extech-register-container">
     <el-row style="margin-top: 75px">
       <el-col :span=3>
-        <div style="height: 500px;">
+        <div style="height: 1400px">
           <el-steps direction="vertical" :space="400" :active="activeStep" finish-status="success" process-status="process">
             <el-step class="el-step-item" title="填写个人报名信息"></el-step>
             <el-step class="el-step-item" title="提交个人报名信息" description="确认信息是否无误"></el-step>
@@ -11,164 +11,166 @@
           </el-steps>
         </div>
       </el-col>
-      <el-col :span=21>
-        <el-tag type="success"><i class="el-icon-document"></i> ExTech 2019 Registration | 报名表</el-tag>
-        <el-alert style="margin-top: 15px" title="您可以同时完成一至多人的注册信息填写，最后一并提交。"
-                  type="info" close-text="OK | 知道了">
-        </el-alert>
-        <el-form :model="localInfo" :rules="rules" ref="ruleForm" label-width="18rem" class="register-form">
-          <el-row>
-            <el-form-item label="Name | 姓名" prop="name">
-              <el-input class="el-input" v-model.trim="localInfo.name"/>
-            </el-form-item>
-            <el-form-item label="Email | 邮箱" prop="contact" :rules="[
+      <el-col :span=21 style="height: 600px">
+        <el-scrollbar style="height: 100%">
+          <el-tag type="success"><i class="el-icon-document"></i> ExTech 2019 Registration | 报名表</el-tag>
+          <el-alert style="margin-top: 15px" title="您可以同时完成一至多人的注册信息填写，最后一并提交。"
+                    type="info" close-text="OK | 知道了">
+          </el-alert>
+          <el-form :model="localInfo" :rules="rules" ref="ruleForm" label-width="18rem" class="register-form">
+            <el-row>
+              <el-form-item label="Name | 姓名" prop="name">
+                <el-input class="el-input" v-model.trim="localInfo.name"/>
+              </el-form-item>
+              <el-form-item label="Email | 邮箱" prop="contact" :rules="[
             {required: true, message: '请输入有效邮箱地址', trigger: 'blur'},
             {type: 'email', message: '邮箱地址不正确！', trigger: 'blur, change'}
             ]">
-              <el-input class="el-input" v-model.trim="localInfo.contact"/>
-            </el-form-item>
-            <!--<el-col :span=8>-->
+                <el-input class="el-input" v-model.trim="localInfo.contact"/>
+              </el-form-item>
+              <!--<el-col :span=8>-->
               <!--<el-form-item label="Gender | 性别">-->
-                <!--<el-select class="el-select" v-model="localInfo.gender">-->
-                  <!--&lt;!&ndash; 这里的key官方推荐在v-for时使用，不然会警告，但不影响使用 &ndash;&gt;-->
-                  <!--<el-option v-for="item in options" :key="item" :value="item"></el-option>-->
-                <!--</el-select>-->
+              <!--<el-select class="el-select" v-model="localInfo.gender">-->
+              <!--&lt;!&ndash; 这里的key官方推荐在v-for时使用，不然会警告，但不影响使用 &ndash;&gt;-->
+              <!--<el-option v-for="item in options" :key="item" :value="item"></el-option>-->
+              <!--</el-select>-->
               <!--</el-form-item>-->
-            <!--</el-col>-->
-          </el-row>
+              <!--</el-col>-->
+            </el-row>
 
-          <el-row>
-            <el-form-item label="Accommodations | 住宿">
-              <el-switch v-model="localInfo.needsAccom"
-                         active-text="I need an accommodation | 需要住宿" inactive-text="I do not need accommodations | 不需要住宿"></el-switch>
-            </el-form-item>
-          </el-row>
-          <el-row>
-            <transition name="fade">
-              <el-form-item label="" v-if="localInfo.needsAccom">
-                <el-switch v-model="localInfo.demandsSingle"
-                           active-text="I need a single room | 需要单人间" inactive-text="I do not need single rooms | 不需要单人间"></el-switch>
+            <el-row>
+              <el-form-item label="Accommodations | 住宿">
+                <el-switch v-model="localInfo.needsAccom"
+                           active-text="I need an accommodation | 需要住宿" inactive-text="I do not need accommodations | 不需要住宿"></el-switch>
               </el-form-item>
-            </transition>
-          </el-row>
-          <el-row v-if="localInfo.needsAccom">
-            <transition name="fade">
-              <el-form-item label="" required>
-                <el-form-item prop="date">
-                  <el-date-picker type="date" placeholder="Scheduled date of arrival | 预计入住日期"
-                                  value-format="yyyy-MM-dd" v-model="localInfo.date" style="width: 100%;"></el-date-picker>
+            </el-row>
+            <el-row>
+              <transition name="fade">
+                <el-form-item label="" v-if="localInfo.needsAccom">
+                  <el-switch v-model="localInfo.demandsSingle"
+                             active-text="I need a single room | 需要单人间" inactive-text="I do not need single rooms | 不需要单人间"></el-switch>
                 </el-form-item>
-              </el-form-item>
-            </transition>
-          </el-row>
+              </transition>
+            </el-row>
+            <el-row v-if="localInfo.needsAccom">
+              <transition name="fade">
+                <el-form-item label="" required>
+                  <el-form-item prop="date">
+                    <el-date-picker type="date" placeholder="Scheduled date of arrival | 预计入住日期"
+                                    value-format="yyyy-MM-dd" v-model="localInfo.date" style="width: 100%;"></el-date-picker>
+                  </el-form-item>
+                </el-form-item>
+              </transition>
+            </el-row>
 
-          <el-row>
-            <el-form-item label="Presentation title | 报告名称" prop="presTitle" :rules="[
+            <el-row>
+              <el-form-item label="Presentation title | 报告名称" prop="presTitle" :rules="[
             {required: true, message: '请输入报告标题', trigger: 'blur'},
             ]">
-              <el-input type="textarea" v-model.trim="localInfo.presTitle"></el-input>
-            </el-form-item>
-          </el-row>
-          <el-row>
-            <el-form-item label="Presentation type | 报告类型" prop="isOral">
-              <el-radio-group v-model="localInfo.isOral">
-                <el-radio style="margin: 2px" border label='true'>I will present orally | 进行口头报告</el-radio>
-                <el-radio style="margin: 2px" border label='false'>I will xxx | 仅进行墙报展示</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-row>
-          <el-row>
-            <transition name="fade">
-              <el-form-item label="" v-if="localInfo.isOral === 'true'" prop="isInEnglish">
-                <el-radio-group v-model="localInfo.isInEnglish">
-                  <el-radio-button style="margin: 2px 0" label=true>I will present in English</el-radio-button>
-                  <el-radio-button style="margin: 2px 0" label=false>我将用中文汇报</el-radio-button>
+                <el-input type="textarea" v-model.trim="localInfo.presTitle"></el-input>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item label="Presentation type | 报告类型" prop="isOral">
+                <el-radio-group v-model="localInfo.isOral">
+                  <el-radio style="margin: 2px" border label='true'>I will present orally | 进行口头报告</el-radio>
+                  <el-radio style="margin: 2px" border label='false'>I will xxx | 仅进行墙报展示</el-radio>
                 </el-radio-group>
               </el-form-item>
-            </transition>
-          </el-row>
+            </el-row>
+            <el-row>
+              <transition name="fade">
+                <el-form-item label="" v-if="localInfo.isOral === 'true'" prop="isInEnglish">
+                  <el-radio-group v-model="localInfo.isInEnglish">
+                    <el-radio-button style="margin: 2px 0" label=true>I will present in English</el-radio-button>
+                    <el-radio-button style="margin: 2px 0" label=false>我将用中文汇报</el-radio-button>
+                  </el-radio-group>
+                </el-form-item>
+              </transition>
+            </el-row>
 
-          <el-form-item label="Notes | 备注信息">
-            <el-input type="textarea" v-model.trim="localInfo.notes"></el-input>
-          </el-form-item>
-          <el-button @click="createQueues('ruleForm')" v-if="!isEditMode" icon="el-icon-circle-check-outline" type="success" round> Finish current registration | 创建报名信息</el-button>
-          <el-button @click="createQueues('ruleForm')" v-else type="success" round> Edit current registration | 修改报名信息</el-button>
-        </el-form>
+            <el-form-item label="Notes | 备注信息">
+              <el-input type="textarea" v-model.trim="localInfo.notes"></el-input>
+            </el-form-item>
+            <el-button @click="createQueues('ruleForm')" v-if="!isEditMode" icon="el-icon-circle-check-outline" type="success" round> Finish current registration | 创建报名信息</el-button>
+            <el-button @click="createQueues('ruleForm')" v-else type="success" round> Edit current registration | 修改报名信息</el-button>
+          </el-form>
 
-        <el-tag type="success" style="margin-top: 3%">
-          <i class="el-icon-edit"></i> Registration queue | 拟提交报名列表
-        </el-tag>
-        <el-card class="box-card">
-          <template>
-            <el-table :data="tableData" style="width: 90%; margin: 0 auto" highlight-current-row :fit="true" max-height="600" tooltip-effect="dark"
-                      ref="multipleTable" @selection-change="handleSelectionChange" @row-click="handleRowSelected">
-              <el-table-column fixed width="50" type="selection">
-              </el-table-column>
-              <el-table-column label="预计入住日期" width="200" prop="date" sortable>
-                <template slot-scope="scope">
-                  <i class="el-icon-time"></i>
-                  <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="个人信息" width="200" prop="name" sortable>
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top">
-                    <h1 class="popover-text">姓名: {{ scope.row.name }}</h1>
-                    <!--<h1 class="popover-text">性别: {{ scope.row.gender }}</h1>-->
-                    <h1 class="popover-text">联系方式: {{ formattedContact(scope.row.contact) }}</h1>
-                    <h1 class="popover-text" v-if="scope.row.needsAccom">需要住宿</h1>
-                    <h1 class="popover-text" v-if="!scope.row.needsAccom">不需要住宿</h1>
-                    <h1 class="popover-text" v-if="scope.row.needsAccom && scope.row.demandsSingle">需要单人间</h1>
-                    <h1 class="popover-text" v-if="scope.row.needsAccom && !scope.row.demandsSingle">不需要单人间</h1>
-                    <div slot="reference" class="name-wrapper">
-                      <el-tag size="medium">{{ scope.row.name }}</el-tag>
-                    </div>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column label="报告名称及类型" width="250" prop="presTitle">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top">
-                    <h1 class="popover-text">报告名称: {{ scope.row.presTitle }}</h1>
-                    <h1 class="popover-text" v-if="scope.row.isOral">报告类型: 口头报告
-                      <b v-if="scope.row.isInEnglish === true"> - English</b>
-                      <b v-else> - 中文</b>
-                    </h1>
-                    <h1 class="popover-text" v-else>报告类型: 墙报</h1>
-                    <div slot="reference" class="pres-wrapper">
-                      <i class="el-icon-document"></i>
-                      {{ formattedTitle(scope.row.presTitle) }}
-                    </div>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column label="其它备注信息" width="250" prop="notes">
-                <template slot-scope="scope">
-                  <el-popover trigger="hover" placement="top">
-                    <h1 class="popover-text">{{ scope.row.presTitle }}</h1>
-                    <div slot="reference" class="pres-wrapper">
-                      {{ formattedTitle(scope.row.notes) }}
-                    </div>
-                  </el-popover>
-                </template>
-              </el-table-column>
-              <el-table-column fixed="right" label="操作" width="150" show-overflow-tooltip>
-                <template slot-scope="item">
-                  <el-button type="info" v-if="!isEditMode" size="mini" @click="editQueues(item.$index)">编辑</el-button>
-                  <el-button type="primary" v-else size="mini" @click="exitEditMode">退出编辑</el-button>
-                  <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteQueues(item.$index)"></el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </template>
-          <el-row style="margin-top: 15px">
-            <el-button type="primary" v-if="isEditMode" round @click="exitEditMode">退出编辑</el-button>
-          </el-row>
-          <div style="margin-top: 15px">
-            <el-button @click="resetSort" type="info" :disabled="!this.tableData || this.tableData.length <= 1" plain round>重置排序</el-button>
-            <el-button style="margin-top: 20px" @click="registerMultiple" icon="el-icon-upload2" :disabled="!this.tableData || this.tableData.length === 0" type="primary" round> 提交报名信息</el-button>
-            <el-button @click="removeSelectedQueues" type="danger" :disabled="!this.selectedRows || this.selectedRows.length === 0" plain round>批量移除</el-button></div>
-        </el-card>
+          <el-tag type="success" style="margin-top: 3%">
+            <i class="el-icon-edit"></i> Registration queue | 拟提交报名列表
+          </el-tag>
+          <el-card class="box-card">
+            <template>
+              <el-table :data="tableData" style="width: 90%; margin: 0 auto" highlight-current-row :fit="true" max-height="600" tooltip-effect="dark"
+                        ref="multipleTable" @selection-change="handleSelectionChange" @row-click="handleRowSelected">
+                <el-table-column fixed width="50" type="selection">
+                </el-table-column>
+                <el-table-column label="预计入住日期" width="200" prop="date" sortable>
+                  <template slot-scope="scope">
+                    <i class="el-icon-time"></i>
+                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="个人信息" width="200" prop="name" sortable>
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top">
+                      <h1 class="popover-text">姓名: {{ scope.row.name }}</h1>
+                      <!--<h1 class="popover-text">性别: {{ scope.row.gender }}</h1>-->
+                      <h1 class="popover-text">联系方式: {{ formattedContact(scope.row.contact) }}</h1>
+                      <h1 class="popover-text" v-if="scope.row.needsAccom">需要住宿</h1>
+                      <h1 class="popover-text" v-if="!scope.row.needsAccom">不需要住宿</h1>
+                      <h1 class="popover-text" v-if="scope.row.needsAccom && scope.row.demandsSingle">需要单人间</h1>
+                      <h1 class="popover-text" v-if="scope.row.needsAccom && !scope.row.demandsSingle">不需要单人间</h1>
+                      <div slot="reference" class="name-wrapper">
+                        <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                      </div>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column label="报告名称及类型" width="250" prop="presTitle">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top">
+                      <h1 class="popover-text">报告名称: {{ scope.row.presTitle }}</h1>
+                      <h1 class="popover-text" v-if="scope.row.isOral">报告类型: 口头报告
+                        <b v-if="scope.row.isInEnglish === true"> - English</b>
+                        <b v-else> - 中文</b>
+                      </h1>
+                      <h1 class="popover-text" v-else>报告类型: 墙报</h1>
+                      <div slot="reference" class="pres-wrapper">
+                        <i class="el-icon-document"></i>
+                        {{ formattedTitle(scope.row.presTitle) }}
+                      </div>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column label="其它备注信息" width="250" prop="notes">
+                  <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top">
+                      <h1 class="popover-text">{{ scope.row.presTitle }}</h1>
+                      <div slot="reference" class="pres-wrapper">
+                        {{ formattedTitle(scope.row.notes) }}
+                      </div>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column fixed="right" label="操作" width="150" show-overflow-tooltip>
+                  <template slot-scope="item">
+                    <el-button type="info" v-if="!isEditMode" size="mini" @click="editQueues(item.$index)">编辑</el-button>
+                    <el-button type="primary" v-else size="mini" @click="exitEditMode">退出编辑</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteQueues(item.$index)"></el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </template>
+            <el-row style="margin-top: 15px">
+              <el-button type="primary" v-if="isEditMode" round @click="exitEditMode">退出编辑</el-button>
+            </el-row>
+            <div style="margin-top: 15px">
+              <el-button @click="resetSort" type="info" :disabled="!this.tableData || this.tableData.length <= 1" plain round>重置排序</el-button>
+              <el-button style="margin-top: 20px" @click="registerMultiple" icon="el-icon-upload2" :disabled="!this.tableData || this.tableData.length === 0" type="primary" round> 提交报名信息</el-button>
+              <el-button @click="removeSelectedQueues" type="danger" :disabled="!this.selectedRows || this.selectedRows.length === 0" plain round>批量移除</el-button></div>
+          </el-card>
+        </el-scrollbar>
         <el-card class="box-card">
           <el-alert style="margin: 15px" title="摘要文档无需与注册信息同时提交；请将待上传的摘要文档命名为“姓名-报告标题”的格式" type="info" close-text="OK | 知道了"></el-alert>
           <el-button type="info" icon="el-icon-download" round>
@@ -696,5 +698,8 @@ export default {
 }
 .upload-section {
   margin: 2rem;
+}
+.el-scrollbar__wrap {
+  overflow-x: hidden;
 }
 </style>
