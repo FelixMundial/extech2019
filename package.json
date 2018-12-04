@@ -88,7 +88,6 @@
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0",
     "nodemailer": "^4.7.0",
-    "vue-amap": "^0.5.8",
     "vue-baidu-map": "^0.21.14"
   },
   "engines": {
