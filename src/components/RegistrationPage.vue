@@ -13,7 +13,7 @@
       </el-col>
       <el-col :span=21 style="height: 600px">
         <el-scrollbar style="height: 100%">
-          <el-tag type="success"><i class="el-icon-document"></i> ExTech 2019 Registration | 报名表</el-tag>
+          <el-tag type="success"><i class="iconfont icon-fuzeren1"></i> ExTech 2019 Registration | 报名表</el-tag>
           <el-alert style="margin-top: 15px" title="您可以同时完成一至多人的注册信息填写，最后一并提交。"
                     type="info" close-text="OK | 知道了">
           </el-alert>
@@ -82,8 +82,8 @@
               <transition name="fade">
                 <el-form-item label="" v-if="localInfo.isOral === 'true'" prop="isInEnglish">
                   <el-radio-group v-model="localInfo.isInEnglish">
-                    <el-radio-button style="margin: 2px 0" label=true>I will present in English</el-radio-button>
-                    <el-radio-button style="margin: 2px 0" label=false>我将用中文汇报</el-radio-button>
+                    <el-radio-button style="margin: 2px 0" label=true><i class="iconfont icon-english2"></i> I will present in English</el-radio-button>
+                    <el-radio-button style="margin: 2px 0" label=false><i class="iconfont icon-zhongwen"></i> 我将用中文汇报</el-radio-button>
                   </el-radio-group>
                 </el-form-item>
               </transition>
@@ -92,12 +92,12 @@
             <el-form-item label="Notes | 备注信息">
               <el-input type="textarea" v-model.trim="localInfo.notes"></el-input>
             </el-form-item>
-            <el-button @click="createQueues('ruleForm')" v-if="!isEditMode" icon="el-icon-circle-check-outline" type="success" round> Finish current registration | 创建报名信息</el-button>
-            <el-button @click="createQueues('ruleForm')" v-else type="success" round> Edit current registration | 修改报名信息</el-button>
+            <el-button @click="createQueues('ruleForm')" v-if="!isEditMode" icon="iconfont icon-tijiao2" type="success" round> Finish current registration | 创建报名信息</el-button>
+            <el-button @click="createQueues('ruleForm')" v-else icon="iconfont icon-icon-edit" type="success" round> Edit current registration | 修改报名信息</el-button>
           </el-form>
 
           <el-tag type="success" style="margin-top: 3%">
-            <i class="el-icon-edit"></i> Registration queue | 拟提交报名列表
+            <i class="iconfont icon-ranking_sponsor_value"></i> Registration queue | 拟提交报名列表
           </el-tag>
           <el-card class="box-card">
             <template>
@@ -114,15 +114,15 @@
                 <el-table-column label="个人信息" width="200" prop="name" sortable>
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top">
-                      <h1 class="popover-text">姓名: {{ scope.row.name }}</h1>
-                      <!--<h1 class="popover-text">性别: {{ scope.row.gender }}</h1>-->
-                      <h1 class="popover-text">联系方式: {{ formattedContact(scope.row.contact) }}</h1>
-                      <h1 class="popover-text" v-if="scope.row.needsAccom">需要住宿</h1>
+                      <h1 class="popover-text" style="text-align: center">{{ scope.row.name }}</h1>
+                      <!--<h1 class="popover-text">{{ scope.row.gender }}</h1>-->
+                      <h1 class="popover-text"><i class="el-icon-message"></i> {{ formattedContact(scope.row.contact) }}</h1>
+                      <h1 class="popover-text" v-if="scope.row.needsAccom"><i class="iconfont icon-weibiaoti--27"></i> 需要住宿</h1>
                       <h1 class="popover-text" v-if="!scope.row.needsAccom">不需要住宿</h1>
-                      <h1 class="popover-text" v-if="scope.row.needsAccom && scope.row.demandsSingle">需要单人间</h1>
-                      <h1 class="popover-text" v-if="scope.row.needsAccom && !scope.row.demandsSingle">不需要单人间</h1>
+                      <h1 class="popover-text" v-if="scope.row.needsAccom && scope.row.demandsSingle"><i class="iconfont icon-pengyou4"></i> 需要单人间</h1>
+                      <h1 class="popover-text" v-if="scope.row.needsAccom && !scope.row.demandsSingle"><i class="iconfont icon-pengyou1"></i> 不需要单人间</h1>
                       <div slot="reference" class="name-wrapper">
-                        <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                        <el-tag size="medium"><i class="iconfont icon-ranking_sponsor_value"></i> {{ scope.row.name }}</el-tag>
                       </div>
                     </el-popover>
                   </template>
@@ -130,10 +130,10 @@
                 <el-table-column label="报告名称及类型" width="250" prop="presTitle">
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top">
-                      <h1 class="popover-text">报告名称: {{ scope.row.presTitle }}</h1>
+                      <h1 class="popover-text"><i class="iconfont icon-biaoti1"></i> {{ scope.row.presTitle }}</h1>
                       <h1 class="popover-text" v-if="scope.row.isOral">报告类型: 口头报告
-                        <b v-if="scope.row.isInEnglish === true"> - English</b>
-                        <b v-else> - 中文</b>
+                        <b v-if="scope.row.isInEnglish === true"> <i class="iconfont icon-english2"></i></b>
+                        <b v-else> <i class="iconfont icon-zhongwen"></i></b>
                       </h1>
                       <h1 class="popover-text" v-else>报告类型: 墙报</h1>
                       <div slot="reference" class="pres-wrapper">
@@ -148,6 +148,7 @@
                     <el-popover trigger="hover" placement="top">
                       <h1 class="popover-text">{{ scope.row.presTitle }}</h1>
                       <div slot="reference" class="pres-wrapper">
+                        <i class="iconfont icon-beizhu"></i>
                         {{ formattedTitle(scope.row.notes) }}
                       </div>
                     </el-popover>
@@ -167,14 +168,14 @@
             </el-row>
             <div style="margin-top: 15px">
               <el-button @click="resetSort" type="info" :disabled="!this.tableData || this.tableData.length <= 1" plain round>重置排序</el-button>
-              <el-button style="margin-top: 20px" @click="registerMultiple" icon="el-icon-upload2" :disabled="!this.tableData || this.tableData.length === 0" type="primary" round> 提交报名信息</el-button>
+              <el-button style="margin-top: 20px" @click="registerMultiple" icon="iconfont icon-tijiao" :disabled="!this.tableData || this.tableData.length === 0" type="primary" round> 提交报名信息</el-button>
               <el-button @click="removeSelectedQueues" type="danger" :disabled="!this.selectedRows || this.selectedRows.length === 0" plain round>批量移除</el-button></div>
           </el-card>
         </el-scrollbar>
         <el-card class="box-card">
           <el-alert style="margin: 15px" title="摘要文档无需与注册信息同时提交；请将待上传的摘要文档命名为“姓名-报告标题”的格式" type="info" close-text="OK | 知道了"></el-alert>
-          <el-button type="info" icon="el-icon-download" round>
-            <a class='download' :href='docDownloadUrl' download="" title="摘要模板下载">{{ docNameExtended }}</a>
+          <el-button type="info" icon="iconfont icon-caozuowendang-xiazai" round>
+            <a class='download' :href='docDownloadUrl' download="" title="摘要模板下载"> {{ docNameExtended }}</a>
           </el-button>
           <!--upload section-->
           <el-upload ref="upload" class="upload-section" drag action=""
@@ -185,9 +186,12 @@
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">
-              <div>只能上传doc/docx/pdf文件，且不超过5M</div>
+              <div style="font-size: larger !important;"><i class="iconfont icon-tixing2"></i>
+                只能上传.doc/.docx <i class="iconfont icon-word-copy-copy"></i>
+                .pdf <i class="iconfont icon-iconfile-pdf-"></i> 文件，且不超过5M
+              </div>
               <el-tag type="success" style="margin-top: 3%">
-                <i class="el-icon-document"></i> Uploading queue | 待上传摘要文档列表
+                <i class="iconfont icon-biaoti"></i> Uploading queue | 待上传摘要文档列表
               </el-tag>
             </div>
           </el-upload>

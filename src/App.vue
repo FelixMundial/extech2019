@@ -17,16 +17,16 @@
               </router-link>
               <el-dropdown class="app-dropdown">
                 <span class="el-dropdown-link">
-                  <i class="el-icon-question"></i>
+                  <i class="iconfont icon-iconindexnor1"></i>
                   <span> Contact Us</span><i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown" class="el-dropdown-menu">
-                  <el-dropdown-item class="el-dropdown-item"><i class="el-icon-message"></i> <el-tag type="success">extech2019@mail.sysu.edu.cn</el-tag></el-dropdown-item>
-                  <el-dropdown-item class="el-dropdown-item"><i class="el-icon-phone-outline"></i> <el-tag type="info">+86 (020) 84110953</el-tag></el-dropdown-item>
+                  <el-dropdown-item class="el-dropdown-item"><el-tag type="success"><i class="iconfont icon-youjian"></i> extech2019@mail.sysu.edu.cn</el-tag></el-dropdown-item>
+                  <el-dropdown-item class="el-dropdown-item"><el-tag type="info"><i class="iconfont icon-icon2"></i> +86 (020) 84110953</el-tag></el-dropdown-item>
                   <el-dropdown-item class="el-dropdown-item">
                     <router-link :to="{path:'/contact', query: {activeName: 'third', activeMenuIndex: '3-3'}}">
                       <el-badge is-dot class="item">
-                        <el-button icon="el-icon-location" type="primary"> Find Us here!</el-button>
+                        <el-button icon="iconfont icon-dizhi" type="primary"> Find Us here!</el-button>
                       </el-badge>
                     </router-link>
                   </el-dropdown-item>
@@ -57,7 +57,7 @@
             <router-link to="/registration">Registration</router-link>
           </el-menu-item>
           <el-menu-item class="nav-item" index="2-2">
-            <router-link to="/">Submission</router-link>
+            <router-link to="/">Payment Issues</router-link>
           </el-menu-item>
         </el-submenu>
         <el-submenu index="3">

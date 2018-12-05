@@ -16,8 +16,8 @@
             </el-col>
             <el-col :span=12>
               <el-input id="amap-search2" v-model="amapInput2" @focus="panelEnabled = true"
-                        clearable placeholder="中山大学南校区丰盛堂">
-                <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                        clearable placeholder="中山大学广州校区南校园丰盛堂">
+                <i slot="prefix" class="el-input__icon iconfont icon-zhuye"></i>
               </el-input>
             </el-col>
           </el-row>

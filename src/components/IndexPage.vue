@@ -16,47 +16,50 @@
       <el-row>
         <el-button class="extech-header" type="success" plain>
           <router-link to="/registration">
-            报名入口 <i class="el-icon-success"></i> Register Now
+            报名入口 <i class="iconfont icon-fuzeren1"></i> Register Now
           </router-link>
         </el-button>
         <el-popover placement="top-start" width="500" v-model="popoverShown" trigger="click">
           <div class="popover-text">
-            <p>Professor. Gangfeng Ouyang</p>
-            <p>Chairman ExTech2015</p>
-            <p>School of Chemistry and Chemical Engineering</p>
-            <p><img src="../assets/logos/icon_org_SYSU.png" alt=""> Sun Yat-sen University, Guangzhou, China</p>
-            <p>extech2015@mail.sysu.edu.cn; cesoygf@mail.sysu.edu.cn</p>
+            <p style="text-align: center; font-family: 'Times New Roman',serif; font-size: 150% !important; margin-bottom: 1rem">
+              Professor. Gangfeng Ouyang
+            </p>
+            <p><i class="iconfont icon-guwenshifuwu-copy" style="font-weight: normal"></i> Chairman ExTech2019</p>
+            <p>School of Chemistry and School of Chemical Engineering</p>
+            <p><i class="iconfont icon-zhongshandaxue-" style="font-weight: normal"></i> Sun Yat-sen University, Guangzhou, China</p>
+            <p><i class="iconfont icon-youxiang" style="font-weight: normal"></i> extech2019@mail.sysu.edu.cn</p>
+            <p><i class="iconfont icon-youxiang" style="font-weight: normal"></i> cesoygf@mail.sysu.edu.cn</p>
           </div>
           <div style="text-align: right; margin: 0">
-            <el-button size="mini" type="text" @click="popoverShown = false">返回 | return</el-button>
+            <el-button size="mini" type="text" @click="popoverShown = false"><i class="iconfont icon-fanhui5" style="font-size: larger !important;"></i></el-button>
             <el-button type="primary" plain size="mini" @click="popoverShown = false">
               <router-link to="/registration">
-                Register Now <i class="el-icon-success"></i> 报名入口
+                Register Now <i class="iconfont icon-tijiao"></i> 报名入口
               </router-link>
             </el-button>
           </div>
           <el-button slot="reference" class="extech-header" type="primary" plain>
-            About ExTech <i class="el-icon-question"></i> 主负责人
+            About ExTech <i class="iconfont icon-fuzeren"></i> 主负责人
           </el-button>
         </el-popover>
         <el-popover ref="popover" placement="top-start" width="500" trigger="hover">
           <div class="popover-text" ref="popover2">
-            <p>Guangdong Chemical Society</p>
+            <p><i class="iconfont icon-huaxue1"></i> Guangdong Chemical Society</p>
             <p>National Natural Science Foundation of China</p>
             <p>Guangzhou Association for Science and Technology</p>
             <p>The Innovation and Talent Introduction Base of Photoelectronic and Functional Molecular Solids Materials, SYSU</p>
-            <p><img src="../assets/logos/icon_org_ce.png" alt=""> School of Chemistry and Chemical Science, SYSU</p>
+            <p><i class="iconfont icon-huaxue"></i> School of Chemistry and Chemical Science, SYSU</p>
           </div>
           <div style="text-align: right; margin: 0">
             <el-button type="primary" plain size="mini">
               <router-link to="/registration">
-                Register Now <i class="el-icon-success"></i> 报名入口
+                Register Now <i class="iconfont icon-tijiao"></i> 报名入口
               </router-link>
             </el-button>
           </div>
         </el-popover>
         <el-button v-popover:popover class="extech-header" type="info" plain>
-          About ExTech <i class="el-icon-question"></i> 协办单位
+          About ExTech <i class="iconfont icon-cbdw"></i> 协办单位
         </el-button>
       </el-row>
       <!--welcome-->
@@ -72,12 +75,12 @@
       <!--sponsors-->
       <div class="box-card">
         <el-row>
-          <div class="extech-title"><i class="icon iconfont icon-sponsor"></i> Sponsors</div>
+          <div class="extech-title"><i class="icon iconfont icon-zanzhushang"></i> Sponsors</div>
         </el-row>
         <el-row>
           <el-col v-for="(o, index) in 10" :key="o" style="margin: 40px; width: 400px">
             <el-card>
-              <img src="../assets/logos/icon_org_SYSU.png">
+              <img src="../assets/logo.png">
               <div style="padding: 14px;">赞助商{{ index + 1 }}</div>
             </el-card>
           </el-col>
