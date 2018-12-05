@@ -78,7 +78,7 @@
           <div class="extech-title"><i class="icon iconfont icon-zanzhushang"></i> Sponsors</div>
         </el-row>
         <el-row>
-          <el-col v-for="(o, index) in 10" :key="o" style="margin: 40px; width: 400px">
+          <el-col v-for="(o, index) in 10" :key="o" style="margin: 40px; width: 320px">
             <el-card>
               <img src="../assets/logo.png">
               <div style="padding: 14px;">赞助商{{ index + 1 }}</div>
@@ -130,7 +130,7 @@ Looking forward to welcoming you in Guangzhou in November 2015!`, `Hey`],
       },
       imgLibrary: [
         {
-          src: require('../assets/sliders/index-slider01.png'),
+          src: require('../assets/sliders/index-slider01.jpg'),
           title: '测试1'
         },
         {
