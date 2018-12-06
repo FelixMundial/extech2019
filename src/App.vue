@@ -37,7 +37,7 @@
       <el-menu background-color="#2F4F4F" text-color="#fff" active-text-color="#ffd04b" unique-opened
                class="app-nav" mode="horizontal" @select="handleSelect" :default-active="activeMenuIndex">
         <el-menu-item index="1"><router-link :to="{path:'/news', query: {activeName: 'first'}}">
-          <i class="iconfont icon-richenganpai1"></i> News
+          <i class="iconfont icon-tixing2"></i> News
         </router-link></el-menu-item>
         <el-menu-item index="2"><router-link to="/registration">
           <i class="iconfont icon-applyFor"></i> Registration
