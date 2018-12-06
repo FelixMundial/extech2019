@@ -4,14 +4,12 @@
     <el-card>
       <el-tabs v-model="activeName" tab-position="left">
         <el-tab-pane class="tab-pane" label="News" name="first">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-        </el-tab-pane>
-        <el-tab-pane class="tab-pane" label="Topics" name="second">
-          <div>PLACEHOLDER COMPONENT</div>
+          <div class="title"><i class="icon iconfont icon-tixing6"></i> 会议通知</div>
+          <div class="text">会议通知</div>
         </el-tab-pane>
         <el-tab-pane class="tab-pane" label="Timetable" name="third">
-          <div>PLACEHOLDER COMPONENT</div>
+          <div class="title"><i class="icon iconfont icon-kecheng8"></i> 日程安排</div>
+          <div class="text">日程安排</div>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -31,11 +29,32 @@ export default {
 
 <style scoped>
   .container {
-    margin: 4rem;
+    margin: 3rem 2rem;
     line-height: 30px;
     text-align: left;
   }
   .tab-pane {
     padding: 2rem;
+  }
+  .title {
+    padding: 2rem;
+    font-size: 150% !important;
+    font-weight: bold;
+    text-align: center;
+  }
+  .text {
+    border-bottom: 1px solid lightgreen;
+    padding-bottom: 2rem;
+    font-size: larger !important;
+    line-height: 30px;
+    text-align: left;
+  }
+  .text:first-letter {
+    /*margin-left: 1em;*/
+    font-size: 300%;
+    font-family: Augusta,serif;
+  }
+  .icon {
+    font-size: 30px !important;
   }
 </style>

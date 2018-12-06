@@ -4,7 +4,7 @@
     <el-card>
       <template>
         <el-tag type="danger">Database entries</el-tag>
-        <el-table :data="tableData" style="width: 90%; margin: 0 auto" highlight-current-row :fit="true" max-height="600" tooltip-effect="dark"
+        <el-table :data="currentData" style="width: 90%; margin: 0 auto" highlight-current-row :fit="true" max-height="600" tooltip-effect="dark"
                   ref="multipleTable" @selection-change="handleSelectionChange" @row-click="handleRowSelected">
           <el-table-column fixed width="50" type="selection">
           </el-table-column>
@@ -64,6 +64,10 @@
         </el-table>
       </template>
     </el-card>
+    <el-pagination small layout="total, sizes, prev, pager, next, jumper" background class="paginator"
+                   @current-change="handlePageChange" :current-page="currentPage" @size-change="handleSizeChange"
+                   :total="itemCount" :page-sizes="[10, 20, 50]" :page-size="pageSize" >
+    </el-pagination>
     <div style="margin-top: 20px">
       <el-button @click="resetSort" type="info" plain round>重置排序</el-button>
       <el-button click="" :disabled="this.selectedRows.length === 0" round>取消选择</el-button>
@@ -78,7 +82,11 @@ export default {
   data () {
     return {
       tableData: [],
-      selectedRows: []
+      selectedRows: [],
+      currentData: [],
+      itemCount: 0,
+      pageSize: 10, // items per page
+      currentPage: 1
     }
   },
   methods: {
@@ -88,6 +96,9 @@ export default {
           console.log('Login info successfully retrieved: ' + Date())
           if (res.data !== '') {
             this.tableData = res.data
+            this.currentData = this.tableData.slice((this.currentPage - 1) *
+              this.pageSize, this.currentPage * this.pageSize)
+            this.itemCount = this.tableData.length
             this.$message({
               message: 'Congrats, loading all login info successful!',
               type: 'success'
@@ -118,6 +129,18 @@ export default {
     },
     resetSort () {
       this.$refs.multipleTable.clearSort()
+    },
+    handlePageChange (page) {
+      this.currentPage = page
+      this.currentData = this.tableData.slice((this.currentPage - 1) *
+        this.pageSize, this.currentPage * this.pageSize)
+      this.itemCount = this.tableData.length
+    },
+    handleSizeChange (size) {
+      this.pageSize = size
+      this.currentData = this.tableData.slice((this.currentPage - 1) *
+        this.pageSize, this.currentPage * this.pageSize)
+      this.itemCount = this.tableData.length
     }
   },
   mounted () {
@@ -128,6 +151,9 @@ export default {
 
 <style scoped>
 .database-container {
-  margin: 0 2rem;
+  margin: 3rem 1rem;
+}
+.paginator {
+  padding-top: 1rem;
 }
 </style>

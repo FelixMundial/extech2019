@@ -4,14 +4,16 @@
     <el-card>
       <el-tabs v-model="activeName" tab-position="left">
         <el-tab-pane class="tab-pane" label="Committee" name="first">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+          <div class="title"><i class="icon iconfont icon-zhongshandaxue-"></i> 会议负责人</div>
+          <div class="text">会议负责人</div>
         </el-tab-pane>
         <el-tab-pane class="tab-pane" label="Sponsors" name="second">
-          <div>PLACEHOLDER COMPONENT</div>
+          <div class="title"><i class="icon iconfont icon-huiyianpai"></i> 赞助商</div>
+          <div class="text">赞助商</div>
         </el-tab-pane>
         <el-tab-pane class="tab-pane" label="Find Us!" name="third">
-          <div>PLACEHOLDER COMPONENT</div>
+          <div class="title"><i class="icon iconfont icon-guojihuiyijihua"></i> Come find Us</div>
+          <div class="text">Come find Us</div>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -31,11 +33,27 @@ export default {
 
 <style scoped>
   .container {
-    margin: 4rem;
+    margin: 3rem;
     line-height: 30px;
     text-align: left;
   }
   .tab-pane {
     padding: 2rem;
+  }
+  .title {
+    padding: 2rem;
+    font-size: 150% !important;
+    font-weight: bold;
+    text-align: center;
+  }
+  .text {
+    border-bottom: 1px solid lightgreen;
+    padding-bottom: 2rem;
+    font-size: larger !important;
+    line-height: 30px;
+    text-align: left;
+  }
+  .icon {
+    font-size: 30px !important;
   }
 </style>

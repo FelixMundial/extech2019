@@ -77,8 +77,8 @@
         <el-row>
           <div class="extech-title"><i class="icon iconfont icon-zanzhushang"></i> Sponsors</div>
         </el-row>
-        <el-row>
-          <el-col v-for="(o, index) in 10" :key="o" style="margin: 40px; width: 320px">
+        <el-row :gutter=50>
+          <el-col v-for="(o, index) in 10" :key="o" style="margin: 40px; width: 300px">
             <el-card>
               <img src="../assets/logo.png">
               <div style="padding: 14px;">赞助商{{ index + 1 }}</div>

@@ -28,7 +28,7 @@ export default {
 
 <style scoped>
   .container {
-    margin: 4rem;
+    margin: 3rem;
     line-height: 30px;
     text-align: left;
   }

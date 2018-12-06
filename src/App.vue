@@ -4,17 +4,14 @@
       <el-row type="flex" justify="space-between" class="app-header-el-row">
         <el-col :span=4>
           <div class="app-header-logo-area">
-            <router-link :to="{path:'/', query: {activeMenuIndex: '1-1'}}">
-              <img class="app-header-logo" src="./assets/icon_sprite.png" style="height: 80px" alt="">
+            <router-link :to="{path:'/', query: {activeMenuIndex: '1'}}">
+              <img class="app-header-logo" src="./assets/logos/extech-logo.png" style="height: 80px" alt="">
             </router-link>
           </div>
         </el-col>
         <el-col :span=20>
           <el-row type="flex" justify="end">
             <el-col :span=5>
-              <router-link to='/admin'>
-                <i class="el-icon-setting"></i>
-              </router-link>
               <el-dropdown class="app-dropdown">
                 <span class="el-dropdown-link">
                   <i class="iconfont icon-iconindexnor1"></i>
@@ -39,61 +36,45 @@
       <!--navigation bar-->
       <el-menu background-color="#2F4F4F" text-color="#fff" active-text-color="#ffd04b" unique-opened
                class="app-nav" mode="horizontal" @select="handleSelect" :default-active="activeMenuIndex">
-        <el-submenu index="1">
-          <template slot="title">ExTech 2019</template>
-          <el-menu-item class="nav-item" index="1-1">
-            <router-link :to="{path:'/news', query: {activeName: 'first'}}">News</router-link>
-          </el-menu-item>
-          <el-menu-item class="nav-item" index="1-2">
-            <router-link :to="{path:'/news', query: {activeName: 'second'}}">Topics</router-link>
-          </el-menu-item>
-          <el-menu-item class="nav-item" index="1-3">
-            <router-link :to="{path:'/news', query: {activeName: 'third'}}">Timetable</router-link>
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="2">
-          <template slot="title">Registration</template>
-          <el-menu-item class="nav-item" index="2-1">
-            <router-link to="/registration">Registration</router-link>
-          </el-menu-item>
-          <el-menu-item class="nav-item" index="2-2">
-            <router-link to="/">Payment Issues</router-link>
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="3">
-          <template slot="title">Contact Us</template>
-          <el-menu-item class="nav-item" index="3-1">
-            <router-link :to="{path:'/contact', query: {activeName: 'first'}}">Committee</router-link>
-          </el-menu-item>
-          <el-menu-item class="nav-item" index="3-2">
-            <router-link :to="{path:'/contact', query: {activeName: 'second'}}">Sponsors</router-link>
-          </el-menu-item>
-          <el-menu-item class="nav-item" index="3-3">
-            <router-link :to="{path:'/contact', query: {activeName: 'third'}}">Find Us!</router-link>
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="4">
-          <template slot="title">Take a Tour</template>
-          <el-menu-item class="nav-item" index="4-1">
-            <router-link :to="{path:'/tours', query: {activeName: 'first'}}">Navigation</router-link>
-          </el-menu-item>
-          <el-menu-item class="nav-item" index="4-2">
-            <router-link :to="{path:'/tours', query: {activeName: 'second'}}">Accommodations</router-link>
-          </el-menu-item>
-          <el-menu-item class="nav-item" index="4-3">
-            <router-link :to="{path:'/tours', query: {activeName: 'third'}}">Guided Tours</router-link>
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="5">
-          <template slot="title">Programs</template>
-          <el-menu-item class="nav-item" index="5-1">
-            <router-link :to="{path:'/programs', query: {activeName: 'first'}}">SPME Symposium 2019</router-link>
-          </el-menu-item>
-          <el-menu-item class="nav-item" index="5-2">
-            <router-link :to="{path:'/programs', query: {activeName: 'second'}}">SPME Courses</router-link>
-          </el-menu-item>
-        </el-submenu>
-        <el-menu-item index="6" disabled>管理</el-menu-item>
+        <el-menu-item index="1"><router-link :to="{path:'/news', query: {activeName: 'first'}}">
+          <i class="iconfont icon-richenganpai1"></i> News
+        </router-link></el-menu-item>
+        <el-menu-item index="2"><router-link to="/registration">
+          <i class="iconfont icon-applyFor"></i> Registration
+        </router-link></el-menu-item>
+        <el-menu-item index="3"><router-link :to="{path:'/contact', query: {activeName: 'first'}}">
+          <i class="iconfont icon-baoming3"></i> Contact Us
+        </router-link></el-menu-item>
+        <el-menu-item index="4"><router-link :to="{path:'/tours', query: {activeName: 'first'}}">
+          <i class="iconfont icon-hangcheng1"></i> Take a Tour
+        </router-link></el-menu-item>
+        <el-menu-item index="5"><router-link :to="{path:'/programs', query: {activeName: 'first'}}">
+          <i class="iconfont icon-kecheng1"></i> Programs
+        </router-link></el-menu-item>
+        <el-menu-item index="6" @click="loginFormVisible = true">
+          <i class="iconfont icon-guanli7"></i> 管理
+        </el-menu-item>
+        <el-dialog title="用户管理登陆" :visible.sync="loginFormVisible">
+          <el-form :model="loginForm">
+            <el-form-item label="登陆方式" label-width="120px">
+              <el-select v-model="loginForm.type" placeholder="请选择登陆方式">
+                <el-option label="密码登陆" value="namepass"></el-option>
+                <el-option label="扫码登陆" value="scanning"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="用户名" label-width="120px">
+              <el-input v-model="loginForm.name" autocomplete="off" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="密码" label-width="120px">
+              <el-input v-model="loginForm.pass" type="password" autocomplete="off" clearable></el-input>
+            </el-form-item>
+            <div v-if="loginFailedTextVisible" class="login-failed-text">* 登陆失败</div>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="loginFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="handleLoginCheck">登 陆</el-button>
+          </div>
+        </el-dialog>
       </el-menu>
     </div>
     <div class="app-content">
@@ -107,12 +88,29 @@ export default {
   name: 'App',
   data () {
     return {
-      activeMenuIndex: this.$route.query.activeMenuIndex || '1-1'
+      activeMenuIndex: this.$route.query.activeMenuIndex || '1-1',
+      loginFormVisible: false,
+      loginForm: {
+        type: '',
+        name: '',
+        pass: ''
+      },
+      loginFailedTextVisible: false
     }
   },
   methods: {
     handleSelect (key, keyPath) {
       console.log(key, keyPath)
+    },
+    handleLoginCheck () {
+      if (this.loginForm.name === 'spme' && this.loginForm.pass === '84110953') {
+        this.loginFormVisible = false
+        this.$router.push({path: '/admin'})
+      } else {
+        this.loginFailedTextVisible = true
+        this.loginForm.name = ''
+        this.loginForm.pass = ''
+      }
     }
   }
   // mounted () {
@@ -156,7 +154,7 @@ export default {
     border: 0;
     font: inherit;
     vertical-align: baseline;
-    font-size: .9rem !important;
+    font-size: 1rem !important;
   }
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure,
@@ -223,5 +221,9 @@ export default {
   }
   .nav-item:not(:last-of-type) {
     border-bottom: 1px solid lightgreen;
+  }
+  .login-failed-text {
+    color: red;
+    width: 200px;
   }
 </style>

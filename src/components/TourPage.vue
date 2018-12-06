@@ -32,8 +32,9 @@
           <div id="poi2-panel"></div>
           <div id="amap2-container"></div>
         </el-tab-pane>
-        <el-tab-pane class="tab-pane" label="Guided Tours" name="third">
-          <div>PLACEHOLDER COMPONENT</div>
+        <el-tab-pane class="tab-pane" label="Bus Tour" name="third">
+          <div class="title"><i class="icon iconfont icon-guangzhoujiedai"></i> Bus Tour</div>
+          <div class="text">Bus Tour</div>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -222,7 +223,7 @@ export default {
 
 <style scoped>
   .container {
-    margin: 4rem 1rem;
+    margin: 3rem 1rem;
     line-height: 30px;
     text-align: left;
   }
@@ -272,5 +273,26 @@ export default {
     margin-bottom: 20px;
     width: 100%;
     height: 400px;
+  }
+  .title {
+    padding: 2rem;
+    font-size: 150% !important;
+    font-weight: bold;
+    text-align: center;
+  }
+  .text {
+    border-bottom: 1px solid lightgreen;
+    padding-bottom: 2rem;
+    font-size: larger !important;
+    line-height: 30px;
+    text-align: left;
+  }
+  .text:first-letter {
+    /*margin-left: 1em;*/
+    font-size: 300%;
+    font-family: Augusta,serif;
+  }
+  .icon {
+    font-size: 30px !important;
   }
 </style>
