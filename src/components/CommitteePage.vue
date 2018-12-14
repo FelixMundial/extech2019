@@ -2,23 +2,15 @@
   <div class="container">
     <div style="margin-top: 50px"></div>
     <el-card>
-      <el-tabs tab-position="left">
-        <el-tab-pane class="tab-pane" label="Organization Committee">
-          <div class="title"><i class="icon iconfont icon-huaxue1"></i> 组织委员会</div>
-          <div class="text">组织委员会</div>
-        </el-tab-pane>
-        <el-tab-pane class="tab-pane" label="Sponsors">
-          <div class="title"><i class="icon iconfont icon-huiyianpai"></i> 赞助商</div>
-          <div class="text">赞助商</div>
-        </el-tab-pane>
-      </el-tabs>
+      <div class="title"><i class="icon iconfont icon-zhongshandaxue-"></i> 学术委员会</div>
+      <div class="text">学术委员会</div>
     </el-card>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ContactPage',
+  name: 'CommitteePage',
   data () {
     return {
       // activeName: this.$route.query.activeName || 'first'
@@ -32,9 +24,6 @@ export default {
     margin: 3rem;
     line-height: 30px;
     text-align: left;
-  }
-  .tab-pane {
-    padding: 2rem;
   }
   .title {
     padding: 2rem;

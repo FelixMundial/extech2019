@@ -204,9 +204,17 @@
           </el-col>
         </el-row>
       </el-tab-pane>
-      <el-tab-pane class="tab-pane" label="会议缴费" name="second">
-        <div class="title"><i class="icon iconfont icon-waihuihuikuan"></i> 会议缴费流程</div>
-        <div class="text">会议缴费流程</div>
+      <el-tab-pane class="tab-pane" label="会议缴费">
+        <div class="main">
+          <div class="title"><i class="icon iconfont icon-waihuihuikuan"></i> 会议缴费流程</div>
+          <div class="text">
+            <div>For those wishing to visit China, a visa may be required depending the country of origin. The list of countries requiring or not a visa can be at the web site of the link. The ExTech2019 Secretariat will be happy to issue a letter of invitation to participants wishing to apply for a visa,</div>
+            <div>please visit: <el-tag type="success">http://cs.mfa.gov.cn/wgrlh/</el-tag></div>
+          </div>
+          <el-row type="flex" justify="center">
+            <img src="../assets/images/payment_info.png" alt="">
+          </el-row>
+        </div>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -714,18 +722,28 @@ export default {
 .el-scrollbar__wrap {
   overflow-x: hidden;
 }
+.main {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid lightgreen;
+}
 .title {
   padding: 2rem;
   font-size: 150% !important;
   font-weight: bold;
+  line-height: 40px;
   text-align: center;
 }
 .text {
-  border-bottom: 1px solid lightgreen;
-  padding-bottom: 2rem;
+  padding: 0 2rem 3rem 3rem;
   font-size: larger !important;
-  line-height: 30px;
+  line-height: 40px;
   text-align: left;
+}
+.text:first-letter {
+  /*margin-left: 1em;*/
+  font-size: 300%;
+  font-family: Augusta,serif;
 }
 .icon {
   font-size: 30px !important;

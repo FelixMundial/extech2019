@@ -7,6 +7,8 @@ import ProgramsPage from '@/components/ProgramsPage'
 import TourPage from '@/components/TourPage'
 import ContactPage from '@/components/ContactPage'
 import NewsPage from '@/components/NewsPage'
+import AccomPage from '@/components/AccomPage'
+import CommitteePage from '@/components/CommitteePage'
 // import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
@@ -25,6 +27,31 @@ export default new Router({
       component: RegistrationPage
     },
     {
+      path: '/news',
+      name: 'News',
+      component: NewsPage
+    },
+    {
+      path: '/committee',
+      name: 'Committee',
+      component: CommitteePage
+    },
+    {
+      path: '/contact',
+      name: 'Contact',
+      component: ContactPage
+    },
+    {
+      path: '/accom',
+      name: 'Accom',
+      component: AccomPage
+    },
+    {
+      path: '/tours',
+      name: 'Tours',
+      component: TourPage
+    },
+    {
       path: '/admin',
       name: 'Admin',
       component: Admin
@@ -33,21 +60,6 @@ export default new Router({
       path: '/programs',
       name: 'Programs',
       component: ProgramsPage
-    },
-    {
-      path: '/news',
-      name: 'News',
-      component: NewsPage
-    },
-    {
-      path: '/contact',
-      name: 'Contact',
-      component: ContactPage
-    },
-    {
-      path: '/tours',
-      name: 'Tours',
-      component: TourPage
     }
   ]
 })

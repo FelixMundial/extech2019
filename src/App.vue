@@ -4,7 +4,7 @@
       <el-row type="flex" justify="space-between" class="app-header-el-row">
         <el-col :span=4>
           <div class="app-header-logo-area">
-            <router-link :to="{path:'/', query: {activeMenuIndex: '1'}}">
+            <router-link to='/'>
               <img class="app-header-logo" src="./assets/logos/extech-logo.png" style="height: 80px" alt="">
             </router-link>
           </div>
@@ -36,22 +36,28 @@
       <!--navigation bar-->
       <el-menu background-color="#2F4F4F" text-color="#fff" active-text-color="#ffd04b" unique-opened
                class="app-nav" mode="horizontal" @select="handleSelect" :default-active="activeMenuIndex">
-        <el-menu-item index="1"><router-link :to="{path:'/news', query: {activeName: 'first'}}">
+        <el-menu-item index="1"><router-link to="/news">
           <i class="iconfont icon-tixing2"></i> News
         </router-link></el-menu-item>
         <el-menu-item index="2"><router-link to="/registration">
           <i class="iconfont icon-applyFor"></i> Registration
         </router-link></el-menu-item>
-        <el-menu-item index="3"><router-link :to="{path:'/contact', query: {activeName: 'first'}}">
-          <i class="iconfont icon-baoming3"></i> Contact Us
+        <el-menu-item index="3"><router-link to="/committee">
+          <i class="iconfont icon-fuzeren"></i> Committee
         </router-link></el-menu-item>
-        <el-menu-item index="4"><router-link :to="{path:'/tours', query: {activeName: 'first'}}">
-          <i class="iconfont icon-hangcheng1"></i> Take a Tour
+        <el-menu-item index="4"><router-link to="/accom">
+          <i class="iconfont icon-zhusu"></i> Accommodations
         </router-link></el-menu-item>
-        <el-menu-item index="5"><router-link :to="{path:'/programs', query: {activeName: 'first'}}">
-          <i class="iconfont icon-kecheng1"></i> Programs
+        <el-menu-item index="5"><router-link to="/programs">
+          <i class="iconfont icon-kecheng5"></i> Programs
         </router-link></el-menu-item>
-        <el-menu-item index="6" @click="loginFormVisible = true">
+        <el-menu-item index="6"><router-link to="/contact">
+          <i class="iconfont icon-baoming3"></i> Contacts
+        </router-link></el-menu-item>
+        <el-menu-item index="7"><router-link to="/tours">
+          <i class="iconfont icon-hangcheng1"></i> Tour
+        </router-link></el-menu-item>
+        <el-menu-item index="8" @click="loginFormVisible = true">
           <i class="iconfont icon-guanli7"></i> 管理
         </el-menu-item>
         <el-dialog title="用户管理登陆" :visible.sync="loginFormVisible">
@@ -88,7 +94,7 @@ export default {
   name: 'App',
   data () {
     return {
-      activeMenuIndex: this.$route.query.activeMenuIndex || '1-1',
+      // activeMenuIndex: this.$route.query.activeMenuIndex || '1-1',
       loginFormVisible: false,
       loginForm: {
         type: '',

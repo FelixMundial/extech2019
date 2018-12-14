@@ -2,39 +2,62 @@
   <div class="container">
     <div style="margin-top: 50px"></div>
     <el-card>
-      <el-tabs v-model="activeName" tab-position="top">
-        <el-tab-pane class="tab-pane" label="Navigation" name="first">
-          <!--AMap-->
-          <el-tag class="amap-tag" v-if="amapHistory !== []" v-for="o in amapHistory" :key="o"
-                  closable @close="handleAmapTagClose(tag)" @click.native="amapInput1 = o">{{ o }}</el-tag>
-          <el-row :gutter=5>
-            <el-col :span=12>
-              <el-input id="amap-search1" v-model="amapInput1" clearable placeholder="请输入起始位置"
-                        @focus="panelEnabled = true; transferEnabled = false">
-                <i slot="prefix" class="el-input__icon el-icon-search"></i>
-              </el-input>
-            </el-col>
-            <el-col :span=12>
-              <el-input id="amap-search2" v-model="amapInput2" @focus="panelEnabled = true"
-                        clearable placeholder="中山大学广州校区南校园丰盛堂">
-                <i slot="prefix" class="el-input__icon iconfont icon-zhuye"></i>
-              </el-input>
-            </el-col>
-          </el-row>
-          <div id="poi1-panel" v-if="panelEnabled && poiPos !== ''" @click="panelEnabled = false"></div>
-          <div id="transfer-panel" v-if="transferEnabled && poiPos !== ''"></div>
-          <div id="amap1-container"></div>
-          <!--BaiduMap-->
-          <baidu-map class="bm-view" ak="YOUR_APP_KEY" :center="广州" :zoom="baiduZoom" @ready="baiduHandler">
-          </baidu-map>
+      <el-tabs tab-position="top">
+        <el-tab-pane class="tab-pane" label="Guided Tours">
+          <div class="title"><i class="icon iconfont icon-guangzhoujiedai"></i> Welcome to Guangzhou!</div>
+          <div class="text">
+            <div class="tour-intro">
+              Guangzhou is the capital city of Guangdong Province. As the third largest city of China, it is enjoying a fast and prosperous economic development. The traffic network is very convenient.
+            </div>
+            <!---->
+            <div class="guide-section-title">
+              Airline
+            </div>
+            <div class="guide-section-text">
+              <div class="guide-section-paragraph">
+                Guangzhou Baiyun International Airport, which inaugurated commercial flights on August 5th, 2004, is one of the three major civilian airports in China. Today, it hosts a total of more than 200 airlines, including over 100 international ones.
+              </div>
+              <div class="guide-section-paragraph">
+                Located in the north of Guangzhou, neighboring Huadu District and Renhe Town, the airport is 28 kilometers distant from Haizhu Square, the geographic center of Guangzhou. Using specially constructed expressways, passengers from Guangzhou or neighboring cities can arrive at the airport conveniently.
+              </div>
+              <div class="guide-section-paragraph">
+                There are 15 express bus lines between the city center and airport, including Airport Express Lines 1-11, Foshan Line, Shude Line, Nanhai Line, and Longshan Line, with fares ranging from 10 to 45 yuan. There are also multiple bus lines between the new airport and cities in the Pearl River Delta.Time table of expressway as follow: Time Table of Expressways.
+              </div>
+            </div>
+            <!---->
+            <div class="guide-section-title">
+              Metro
+            </div>
+            <div class="guide-section-text">
+              <div class="guide-section-paragraph">
+                There are fourteen metro lines in Guangzhou and service charges are based on the distance between pick-up and destination points: charges are RMB2 for the first four kilometers; RMB1/every four kilometers from four to twelve kilometers; RMB1/every six kilometers from twelve to twenty-four kilometers and RMB1/every eight kilometers over the distance of twenty-four kilometers.
+              </div>
+              <div class="guide-section-paragraph">
+                Metro Route: <el-tag type="success">http://www.gzmtr.com/</el-tag>
+              </div>
+            </div>
+            <!---->
+            <div class="guide-section-title">
+              Taxi
+            </div>
+            <div class="guide-section-text">
+              <div class="guide-section-paragraph">
+                There are about 16,000 taxis in Guangzhou. The various colors of the cars signify different taxi companies. Passengers can stop a taxi by just waving his or her hand.
+              </div>
+              <div class="guide-section-paragraph">
+                The basic charge is RMB 10 for the first 2.5 kilometers and, at the destination they pay the charge that is displayed on the taximeter. The price per kilometer beyond the initial 2.5 kilometers is RMB2.2 or RMB2.6 per kilometer depending on whether the route is inside or outside the defined metro service area.
+              </div>
+            </div>
+          </div>
         </el-tab-pane>
-        <el-tab-pane class="tab-pane" label="Accommodations" name="second">
-          <div id="poi2-panel"></div>
-          <div id="amap2-container"></div>
-        </el-tab-pane>
-        <el-tab-pane class="tab-pane" label="Bus Tour" name="third">
-          <div class="title"><i class="icon iconfont icon-guangzhoujiedai"></i> Bus Tour</div>
-          <div class="text">Bus Tour</div>
+        <el-tab-pane class="tab-pane" label="Guided Tours">
+          <div class="title"><i class="icon iconfont icon-guangzhoujiedai"></i> Have fun in Guangzhou!</div>
+          <div v-for="o in tourContents" :key="o">
+            <div v-for="img in o.images" :key="img">
+              <img :src="img.src" alt="" width="100%" oncontextmenu="return false;" ondragstart="return false;"/>
+            </div>
+            <div v-for="text in o.texts" :key="text" class="tour-section-text">{{ text }}</div>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -42,181 +65,43 @@
 </template>
 
 <script>
-import BaiduMap from 'vue-baidu-map'
 export default {
   name: 'TourPage',
-  components: {
-    BaiduMap
-  },
   data () {
     return {
-      activeName: this.$route.query.activeName || 'first',
-      amapCenter: [113.298218, 23.100821],
-      amapHistory: [],
-      amapInput1: '',
-      amapInput2: '',
-      panelEnabled: true,
-      transferEnabled: true,
-      poiPos: '',
-      // poi2Pos: '',
-      baiduZoom: 3
-    }
-  },
-  watch: {
-    amapInput1 (newVal, oldVal) {
-      if (newVal === '') {
-        this.poiPos = ''
+      // activeName: this.$route.query.activeName || 'first',
+      tourContents: [{
+        images: [{src: require('../assets/images/tour_A.jpg')}],
+        texts: [`Guangzhou, capital of south China, is not only noted for its prosperous economy but also for its incomparable geographical position, for there are many places of interest in city area such as Beijing Road Pedestrian Shopping Street, Changlong Amusement park, Dr. Sun Yat-sen's memorial Hall and a lot of tourist interests of world prestige in surrounding cities such as Guilin, the ancient town of Lijiang, Zhangjiajie National Forest Park and so forth, all of which are quite near and easy to reach from Guangzhou.
+      `]
+      },
+      {
+        images: [{src: require('../assets/images/tour_B.jpg')}],
+        texts: [`Guilin is one of China's most picturesque cities, situated in the northeast of the Guangxi Zhuang Autonomous Region of China on the west bank of the Lijiang River. Its name means "forest of Sweet Osmanthus", owing to the large number of fragrant Sweet Osmanthus trees located in the city. It boasts of its characteristic tropical and subtropical karst landform such as Elephant Trunk Hill, Diecai Park, Reed Flute Cave and the mirror-like water of the Lijiang River. Thus, there is a saying that goes "East or west, Guilin landscape is the best".
+        `]
+      },
+      {
+        images: [{src: require('../assets/images/tour_C.jpg')}],
+        texts: [`Located in the northwest of Yunnan Province of China, the ancient town of Lijiang was built about 800 years ago during the Southern Song Dynasty. Owing to it's unique and time-honored ethnic culture and urban layout, this old town (including Baisha and Shuhe housing clusters) was enlisted to be one of World Cultural Heritage in 1997. In this ancient town, the old street which is built along the river, paved by Breccia and the commercial center of the town and 364 old bridges which was built over the Yu water system every one kilometer in Qing dynasty are awfully warm welcomed resorts of the town.
+        `]
+      },
+      {
+        images: [{src: require('../assets/images/tour_D.jpg')}],
+        texts: [`Located in the northwest of Hunan province of China, Zhangjiajie National Forest Park was established by the State Council in 1982 as the first National Forest Park of China. It was listed into the World Heritage Directory by UNESCO in 1992, and in 2004 was listed as a UNESCO Global Geopark. It is among the first scenery spots that were recognized as the China's Class AAAAA Scenery Spots in 2007. It was once chosen as one of the shooting sites of Avatar. Tianmen Mountain is the highest karst cave through mountain and it is noted as wonder of mother nature.
+        `]
+      },
+      {
+        images: [{src: require('../assets/images/tour_E.jpg')}],
+        texts: [`Danxiashan National Park with the area of 290km2 is located in the northeastern suburban area of the city of Shaoguan, Guangdong province, China. It is based on the landform of Mt. Danxia. Danxia which can be literally understood as “red sunglow” according to its Chinese meaning has features with “luster as vermeil and patina as sunglow”. In 1930’s the landform characteristic of non-marine red clastic rock, red walls and red cliffs was named by geologists Danxia Landform. Therefore, the park is quite famous for its rare red stone and steep red cliff, limpid water, verdant trees and peaceful country scenery.
+        `]
+      },
+      {
+        images: [{src: require('../assets/images/tour_F.jpg')}, {src: require('../assets/images/tour_G.jpg')}],
+        texts: [`Hong Kong and Macao, located in the south of China are two Special Administrative Regions of China. As prosperous Cosmopolis, they enjoy world reputation. Being one of the financial center of Asia Hongkong is renowned as the Pearl of the Orient. Meanwhile it is a desired destination of entertainment and shopping. Such palces as Hong Kong Ocean Park, Dysineyland, Taikoo Shing and New Town Plaza are of great magic for tourists from home and abroad. Macao boasts of the city without darkness and is one the most popular destination of entertainment. Lisboa Casino is one of the three renowned casinos in the world and Ruins of St.Paul is the symbol of Maccao.
+        `]
       }
+      ]
     }
-  },
-  methods: {
-    initAmap1 () {
-      /* eslint-disable no-undef */
-      let amap = new AMap.Map('amap1-container', {
-        center: this.amapCenter,
-        resizeEnable: true,
-        zoom: 11,
-        lang: 'en'
-      })
-      AMap.plugin([
-        'AMap.ToolBar',
-        'AMap.Scale',
-        'AMap.OverView',
-        'AMap.MapType',
-        'AMap.Geolocation',
-        'AMap.Autocomplete',
-        'AMap.Transfer'
-      ], () => {
-        amap.addControl(new AMap.ToolBar())
-        amap.addControl(new AMap.Scale())
-        amap.addControl(new AMap.OverView({isOpen: true}))
-        amap.addControl(new AMap.MapType())
-        // Geolocation settings
-        let geolocation = new AMap.Geolocation({
-          enableHighAccuracy: true, //  是否使用高精度定位，默认:true
-          timeout: 10000, //  超过10秒后停止定位，默认：无穷大
-          maximumAge: 0, // 定位结果缓存0毫秒，默认：0
-          convert: true, // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
-          showButton: true, //  显示定位按钮，默认：true
-          buttonPosition: 'LB', // 定位按钮停靠位置，默认：'LB'，左下角
-          buttonOffset: new AMap.Pixel(10, 60), //  定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-          showMarker: true, //  定位成功后在定位到的位置显示点标记，默认：true
-          showCircle: true, //  定位成功后用圆圈表示定位精度范围，默认：true
-          panToLocation: true, //  定位成功后将定位到的位置作为地图中心点，默认：true
-          zoomToAccuracy: true //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-        })
-        amap.addControl(geolocation)
-        // geolocation.getCurrentPosition()
-        AMap.event.addListener(geolocation, 'complete', (result) => {
-          amap.setCenter(result.position)
-        })
-        AMap.event.addListener(geolocation, 'error', (result) => {
-          console.log(result)
-        })
-        //  AutoComplete search
-        // 实例化Autocomplete
-        var autocomplete = new AMap.Autocomplete({
-          // input 为绑定输入提示功能的input的DOM ID
-          input: 'amap-search1',
-          city: '020'
-        })
-        // 无需再手动执行search方法，AutoComplete会根据传入input对应的DOM动态触发search
-        AMap.event.addListener(autocomplete, 'select', (e) => {
-          this.poiPos = e.poi
-          this.amapInput1 = this.poiPos.name
-          if (this.amapHistory) {
-            if (this.amapHistory.length >= 5) {
-              this.amapHistory.slice(0, 1)
-            }
-            for (let i = 0; i < this.amapHistory.length; i++) {
-              if (this.amapHistory[i] === this.amapInput1) {
-                this.amapHistory.splice(i, 1)
-                break
-              }
-            }
-            this.amapHistory.push(this.amapInput1)
-          }
-          amap.setCenter(this.poiPos.location)
-          var markerOption = {
-            map: amap,
-            icon: ''
-          }
-          var marker = new AMap.Marker(markerOption)
-          marker.setPosition(this.poiPos.location)
-          // POI search
-          AMap.service(['AMap.PlaceSearch'], () => {
-            // 构造地点查询类
-            var placeSearch = new AMap.PlaceSearch({
-              pageSize: 5, // 单页显示结果条数
-              pageIndex: 1, // 页码
-              city: '020', // 兴趣点城市
-              citylimit: true, // 是否强制限制在设置的城市内搜索
-              map: amap, // 展现结果的地图实例
-              panel: 'poi1-panel', // 结果列表将在此容器中进行展示。
-              autoFitView: false // 是否自动调整地图视野使绘制的 Marker点都处于视口的可见范围
-              // lang: 'en'
-            })
-            // 关键字查询
-            placeSearch.search(this.poiPos.name, (status, res) => {
-              console.log(res)
-            })
-          })
-          this.transferEnabled = true
-          AMap.service(['AMap.Transfer'], () => {
-            // 实例化Transfer
-            console.log('AMap.Transfer')
-            var transfer = new AMap.Transfer({
-              city: '020', // 必须值，搭乘公交所在城市
-              map: amap, // 可选值，搜索结果的标注、线路等均会自动添加到此地图上
-              panel: 'transfer-panel', // 可选值，显示搜索列表的容器,
-              // extensions: "all", // 可选值，详细信息
-              policy: AMap.TransferPolicy.MOST_COMFORT // 驾驶策略：最省时模式
-            })
-            transfer.search([{keyword: this.poiPos.name}, {keyword: '中山大学广州南校区丰盛堂'}], (status, result) => {
-              console.log(status, result)
-            })
-          })
-        })
-      })
-    },
-    handleAmapTagClose (tag) {
-      this.amapHistory.splice(this.amapHistory.indexOf(tag), 1)
-    },
-    baiduHandler ({BMap, map}) {
-      console.log(BMap, map)
-      this.center.lng = 116.404
-      this.center.lat = 39.915
-      this.zoom = 15
-    },
-    initAmap2 () {
-      var amap2 = new AMap.Map('amap2-container', {
-        resizeEnable: true,
-        center: this.amapCenter,
-        zoom: 13
-      })
-      AMap.service('AMap.PlaceSearch', () => {
-        var placeSearch = new AMap.PlaceSearch({
-          pageSize: 8,
-          pageIndex: 1,
-          children: 1,
-          type: '住宿服务',
-          city: '020',
-          citylimit: true,
-          map: amap2,
-          panel: 'poi2-panel',
-          autoFitView: true
-        })
-        placeSearch.searchNearBy('', this.amapCenter, 3000, (status, result) => {
-          if (status === 'complete' && result.info === 'OK') {
-            console.log(result)
-          }
-        })
-      })
-    }
-  },
-  mounted () {
-    this.initAmap1()
-    this.initAmap2()
   }
 }
 </script>
@@ -230,61 +115,17 @@ export default {
   .tab-pane {
     padding: 0 1rem;
   }
-  #amap1-container, #amap2-container {
-    margin-bottom: 20px;
-    width: 100%;
-    height: 600px;
-  }
-  .amap-tag {
-    margin-bottom: 5px;
-    margin-right: 3px;
-  }
-  #poi1-panel {
-    border-radius: 10px;
-    position: absolute;
-    max-height: 200px;
-    width: 88%;
-    left: 8%;
-    overflow-y: scroll;
-    z-index: 99;
-  }
-  #transfer-panel {
-    border-radius: 10px;
-    margin: 5px;
-    position: absolute;
-    background-color: white;
-    max-height: 500px;
-    overflow-y: auto;
-    top: 100px;
-    left: 8%;
-    z-index: 98;
-    width: 25%;
-  }
-  #poi2-panel {
-    border-radius: 10px;
-    margin: 5px;
-    position: absolute;
-    max-height: 550px;
-    overflow-y: auto;
-    z-index: 98;
-    width: 25%;
-  }
-  .bm-view {
-    margin-bottom: 20px;
-    width: 100%;
-    height: 400px;
-  }
   .title {
     padding: 2rem;
     font-size: 150% !important;
     font-weight: bold;
+    line-height: 40px;
     text-align: center;
   }
   .text {
-    border-bottom: 1px solid lightgreen;
-    padding-bottom: 2rem;
+    padding: 0 2rem 3rem 3rem;
     font-size: larger !important;
-    line-height: 30px;
+    line-height: 40px;
     text-align: left;
   }
   .text:first-letter {
@@ -294,5 +135,26 @@ export default {
   }
   .icon {
     font-size: 30px !important;
+  }
+  .guide-section-title {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 120% !important;
+    margin-left: 2em;
+  }
+  .guide-section-text {
+    padding: 20px;
+    font-size: larger !important;
+    line-height: 40px;
+    text-align: left;
+  }
+  .guide-section-paragraph {
+    margin-bottom: 10px;
+  }
+  .tour-section-text {
+    padding: 40px;
+    font-size: larger !important;
+    line-height: 40px;
+    text-align: left;
   }
 </style>
