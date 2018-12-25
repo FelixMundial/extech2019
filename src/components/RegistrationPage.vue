@@ -1,5 +1,6 @@
 <template>
   <div class="extech-register-container">
+    <div class="header-patch"></div>
     <el-tabs type="border-card">
       <el-tab-pane label="会议报名">
         <el-row style="margin-top: 75px">
@@ -206,9 +207,14 @@
       </el-tab-pane>
       <el-tab-pane class="tab-pane" label="会议缴费">
         <div class="main">
+          <el-row type="flex" justify="center">
+            <el-button type="info" plain>
+              <router-link to="/contact">Contact Us | 联系我们</router-link>
+            </el-button>
+          </el-row>
           <div class="title"><i class="icon iconfont icon-waihuihuikuan"></i> 会议缴费流程</div>
           <div class="text">
-            <div>For those wishing to visit China, a visa may be required depending the country of origin. The list of countries requiring or not a visa can be at the web site of the link. The ExTech2019 Secretariat will be happy to issue a letter of invitation to participants wishing to apply for a visa,</div>
+            <div>The Committee of ExTech2019 will be happy to issue a letter of invitation to participants who wishes to apply for a visa,</div>
             <div>please visit: <el-tag type="success">http://cs.mfa.gov.cn/wgrlh/</el-tag></div>
           </div>
           <el-row type="flex" justify="center">

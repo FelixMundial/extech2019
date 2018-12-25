@@ -5,10 +5,10 @@ import RegistrationPage from '@/components/RegistrationPage'
 import Admin from '@/components/Admin'
 import ProgramsPage from '@/components/ProgramsPage'
 import TourPage from '@/components/TourPage'
-import ContactPage from '@/components/ContactPage'
+import CommitteePage from '@/components/CommitteePage'
 import NewsPage from '@/components/NewsPage'
 import AccomPage from '@/components/AccomPage'
-import CommitteePage from '@/components/CommitteePage'
+import ContactPage from '@/components/ContactPage'
 // import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
@@ -42,12 +42,12 @@ export default new Router({
       component: ContactPage
     },
     {
-      path: '/accom',
+      path: '/accommodation',
       name: 'Accom',
       component: AccomPage
     },
     {
-      path: '/tours',
+      path: '/exploration',
       name: 'Tours',
       component: TourPage
     },

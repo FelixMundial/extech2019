@@ -1,14 +1,16 @@
 <template>
   <div class="container">
-    <div style="margin-top: 50px"></div>
+    <div class="header-patch"></div>
     <el-card>
       <!--<el-tabs v-model="activeName" tab-position="left">-->
       <el-tabs tab-position="left">
         <el-tab-pane class="tab-pane" label="News">
           <el-row type="flex" justify="center">
-            <el-button type="info" plain>Contact Us | 联系我们</el-button>
+            <el-button type="info" plain>
+              <router-link to="/contact">Contact Us | 联系我们</router-link>
+            </el-button>
           </el-row>
-          <div v-for="o in section1" :key="o" class="main">
+          <div v-for="(o, index) in section1" :key="index" class="main">
             <div class="title"><i class="icon iconfont icon-tixing6"></i> {{ o.title }}</div>
             <div class="text">{{ o.textEN }}</div>
             <div v-html="signitureEN" class="signiture">
@@ -22,12 +24,26 @@
           </div>
         </el-tab-pane>
         <el-tab-pane class="tab-pane" label="Important Dates">
-          <div v-for="o in section2" :key="o" class="main">
-            <div class="title"><i class="icon iconfont icon-kecheng8"></i> {{ o.title }}</div>
-            <div class="text">{{ o.textEN }}</div>
-            <div class="separator"></div>
-            <div class="text">{{ o.textCN }}</div>
+          <div class="title"><i class="icon iconfont icon-kecheng8"></i> {{ section3Title }}</div>
+          <div v-for="(o, index) in section3" :key="index" class="main">
+            <el-row class="form" type="flex" justity="space-between">
+              <el-col class="schedule-name">
+                {{ o.name }}
+              </el-col>
+              <el-col class="schedule-time">
+                <i class="icon iconfont icon-anpaixiangmu"></i> {{ o.time }}
+              </el-col>
+            </el-row>
           </div>
+        </el-tab-pane>
+        <el-tab-pane class="tab-pane" label="Program Schedule">
+          <div class="title"><i class="icon iconfont icon-kecheng8"></i> Program Schedule | 会议议程</div>
+          <el-row type="flex" justify="center" style="margin-bottom: 50px">
+            <img src="../assets/images/schedule_en.png" alt="">
+          </el-row>
+          <el-row type="flex" justify="center">
+            <img src="../assets/images/schedule_zh.png" alt="">
+          </el-row>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -80,7 +96,20 @@ On-line registration and submission of abstracts is now available on our website
               <p>化学学院</p>
               <p>中山大学，中国广州</p>
               <p>cesoygf@mail.sysu.edu.cn</p>
-`
+`,
+      section3Title: 'Important dates | 重要日期',
+      section3: [
+        {name: `Abstract Submission opens (提交摘要开始时间)`,
+          time: `Jan. 1st, 2019 (2019-01-01)`},
+        {name: `Registration opens (注册报名开始时间)`,
+          time: `Jan. 1st, 2019 (2019-01-01)`},
+        {name: `Deadline for Abstract Submission (提交摘要截止日期)`,
+          time: `Sep. 30th, 2019 (2019-09-30)`},
+        {name: `Deadline for Registration (注册报名截止时间)`,
+          time: `Sep. 30th, 2019 (2019-09-30)`},
+        {name: `Deadline for Early Payment (提交缴费截止时间)`,
+          time: `Sep. 30th, 2019 (2019-09-30)`}
+      ]
     }
   }
 }
@@ -128,5 +157,16 @@ On-line registration and submission of abstracts is now available on our website
   }
   .icon {
     font-size: 30px !important;
+  }
+  .form {
+    line-height: 40px;
+    text-align: left;
+  }
+  .schedule-name {
+    font-size: 28px !important;
+  }
+  .schedule-time {
+    font-size: 28px !important;
+    text-align: center;
   }
 </style>

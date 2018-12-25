@@ -1,10 +1,10 @@
 <template>
   <div class="extech-container">
-    <swiper :options="swiperOption" ref="mySwiper">
+    <swiper :options="swiperOption" ref="mySwiper" class="swiper-container">
       <!-- slides -->
       <swiper-slide v-for="item in imgLibrary" :key="item">
         <img :src="item.src"/>
-        <h1 class="swiper-slide-title">{{ item.title }}</h1>
+        <!--<div class="swiper-slide-title"><h1>{{ item.title }}</h1></div>-->
       </swiper-slide>
       <!-- Optional controls -->
       <div class="swiper-pagination"  slot="pagination"></div>
@@ -76,7 +76,7 @@
       <!--</el-row>-->
       <!--welcome-->
       <el-row>
-        <div class="extech-title"><i class="icon iconfont icon-huanyingye"></i> Welcome to ExTech 2019!</div>
+        <div class="extech-title"><i class="icon iconfont icon-guangzhou"></i> Welcome to ExTech 2019!</div>
       </el-row>
       <el-card class="box-card">
         <div class="welcome-title" v-for="o in welcomeTitle" :key="o">
@@ -141,10 +141,10 @@
         <div class="extech-title"><i class="icon iconfont icon-zhuti"></i> Topics</div>
       </el-row>
       <el-card class="box-card">
-        <div class="welcome-text">
+        <div class="topic-title">
           {{ topicText[0] }}
         </div>
-        <div v-for="(o, index) in topicList" :key="index" class="topic-text">
+        <div v-for="(o, index) in topicList" :key="index" class="topic-text topic-list">
           <i class="iconfont icon-zhuti4"></i> {{ o }}
         </div>
         <div>
@@ -179,7 +179,7 @@ export default {
   data () {
     return {
       activeNames: ['assisting'],
-      welcomeTitle: ['Welcome to the 21st edition of Index, the International Symposium on Advances in Extraction Technologies, to be held in Sun Yat-sen University, Guangzhou, China, from 8th - 13th November, 2019.', '欢迎参加第21届国际先进萃取研讨会（ExTech 2019），会议将于2019年11月9-13日于中山大学（中国，广州）举办。'],
+      welcomeTitle: ['Welcome to the 21st International Symposium on Advances in Extraction Techniques, to be held in Sun Yat-sen University, Guangzhou, China, from 9th - 13th November, 2019.', '欢迎参加第21届国际先进萃取研讨会（ExTech 2019），会议将于2019年11月9-13日于中山大学（中国，广州）举办。'],
       welcomeText: [`The ExTech symposium series is the flagship event for sample preparation, analytical extraction and sample clean-up techniques. The series, started in 1999 by professor Janusz Pawliszyn (University of Waterloo), has been held annually around the world. The ExTech aims to explore new advances in sample pretreatment techniques and to disseminate new ideas in the field.
 In its 21th year, this cutting edge international research meeting will be hosted by the School of Chemistry of Sun Yat-sen University from 8th to 13th November 2019 in Guangzhou, one of the most attractive and advanced cities in China. This symposium will take place in the Fulan Academic Center, School of Chemistry. Contributed sessions will showcase innovative researches, cutting edge technologies, as well as new products and techniques in a broad range of analytical chemistry. A short SPME course will be held on the 12th of November 2019.
 Join many other scientists and practitioners, from universities and scientific research institutions and corporations, active at the frontiers of the expanding field of sample preparation, as they gather to discuss groundbreaking research and the development direction of this field.
@@ -287,7 +287,6 @@ Looking forward to welcoming you in Guangzhou in November 2019!
   text-align: center;
   font-size: 38px;
   font-weight: 700;
-  background-color: #eee;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -332,15 +331,26 @@ Looking forward to welcoming you in Guangzhou in November 2019!
   line-height: 50px;
   text-align: left;
 }
+.topic-title {
+  border-top: 1px solid lightgreen;
+  padding: 2em 1em;
+  font-size: larger !important;
+  line-height: 50px;
+  text-align: left;
+}
 .topic-text {
-  padding-bottom: 1em;
+  padding: 1em;
   font-size: larger !important;
   line-height: 40px;
   text-align: left;
 }
+.topic-list {
+  font-family: 'Times New Roman',serif;
+  font-style: italic;
+}
 .welcome-text:first-letter {
   /*margin-left: 1em;*/
-  font-size: 300%;
+  font-size: 200%;
   font-family: Augusta,serif;
 }
 .icon {

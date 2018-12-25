@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div style="margin-top: 50px"></div>
+    <div class="header-patch"></div>
     <el-card>
       <el-tabs tab-position="left">
         <el-tab-pane class="tab-pane" label="SPME Symposium 2019">

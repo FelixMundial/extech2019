@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <div style="margin-top: 50px"></div>
+    <div class="header-patch"></div>
     <el-card>
       <el-tabs tab-position="top">
-        <el-tab-pane class="tab-pane" label="Accommodations">
-          <div class="title"><i class="icon iconfont icon-zhusu"></i> Accommodations</div>
+        <el-tab-pane class="tab-pane" label="Recommended Accommodations">
+          <div class="title"><i class="icon iconfont icon-zhusu"></i> Recommended Accommodations</div>
           <el-row style="margin: 20px 4em; line-height: 50px !important; font-weight: bold">
             <div><i class="icon iconfont icon-dizhi"></i> Fengsheng Hall, Sun Yat-sen University, Guangzhou, Guangdong, P.R. China</div>
             <div><i class="icon iconfont icon-zhuye"></i> Postal Code: 510275</div>
@@ -18,6 +18,9 @@
                 <img :src="img.src" alt="" width="100%" oncontextmenu="return false;" ondragstart="return false;"/>
               </div>
               <div v-html="text" v-for="text in o.texts" :key="text" class="tour-section-text">{{ text }}</div>
+              <el-row type="flex" justify="center">
+                <img :src="o.info" alt=""/>
+              </el-row>
             </el-collapse-item>
           </el-collapse>
           <!--<div id="poi2-panel"></div>-->
@@ -35,10 +38,11 @@
               </el-input>
             </el-col>
             <el-col :span=12>
-              <el-input id="amap-search2" v-model="amapInput2" @focus="panelEnabled = true"
-                        clearable placeholder="中山大学广州校区南校园丰盛堂">
-                <i slot="prefix" class="el-input__icon iconfont icon-zhuye"></i>
-              </el-input>
+              <el-tag><i class="iconfont icon-zhuye"></i> 中山大学广州校区南校园丰盛堂</el-tag>
+              <!--<el-input id="amap-search2" v-model="amapInput2" @focus="panelEnabled = true"-->
+                        <!--clearable placeholder="">-->
+                <!--<i slot="prefix" class="el-input__icon iconfont icon-zhuye"></i>-->
+              <!--</el-input>-->
             </el-col>
           </el-row>
           <div id="poi1-panel" v-if="panelEnabled && poiPos !== ''" @click="panelEnabled = false"></div>
@@ -61,101 +65,64 @@ export default {
       amapCenter: [113.298218, 23.100821],
       amapHistory: [],
       amapInput1: '',
-      amapInput2: '',
+      // amapInput2: '',
       panelEnabled: true,
       transferEnabled: true,
       poiPos: '',
       // poi2Pos: '',
-      accomContents: [{images: [{src: require('../assets/images/accom_A.jpg')}],
-        title: '(A) SYSU Hotel & Conference Center (recommended)',
-        texts: [`<div style="font-weight: bold; font-size: 150% !important; margin-bottom: 10px">
-(A) SYSU Hotel & Conference Center (recommended)</div>
+      accomContents: [
+        {images: [{src: require('../assets/images/accom_A.jpg')}],
+          info: '',
+          title: '(A) Hotel & Conference Center of Sun Yat-sen University (recommended) | ' +
+          '中山大学学人馆',
+          texts: [`<div style="font-weight: bold; font-size: 150% !important; margin-bottom: 10px">
+(A) Hotel & Conference Center of Sun Yat-sen University (recommended) | 中山大学学人馆</div>
 <p>Inside school</p>
-<p>(Special rates have been negotiated for ExTech2015 delegates at SYSU Hotel & Conference Centre. It is located in Sun Yat­sen University, and close to the conference venue. Participants intending to book rooms here please contact with the hotel for your demands. The hotel will arrange the rooms and send back confirmation letters after the transfers are verified.
-</p>
-<p><i class="icon iconfont icon-email"></i> Hotel email: 18127996301@163.com</p>
-<p>Hotel account: 693864212768</p>
+<p><i class="icon iconfont icon-youxiang"></i> Hotel email: 18127996301@163.com</p>
+<div style="padding-left: 20px">
+<p><i class="icon iconfont icon-fukuan1"></i> Hotel account: 693864212768</p>
 <p>Bank: Zhongshan University Subbranch Bank of China, Guangzhou</p>
 <p>Bank address: Floor One, Science Technology Building of Zhongshan University, No.135, Xingangxi Rd, Guangzhou, China
 </p>
 <p>Swift Code: BKCHCNBJ400</p>
-<p>Room types Prices (CNY)</p>
-<p>City view room (twin beds or king size) 395</p>
-<p>River view room (twin beds) 475</p>
-<p>Business room (king size) 625</p>
-<p>Business suit 675</p>
-<p>River view suit 725</p>
+</div>
 <p>Hotel breakfast (per person per day; extra charge) 50)</p>
 `]},
-      {images: [{src: require('../assets/images/accom_B1.png')}],
-        title: '(B) Wing Kwong Hall',
-        texts: [`<div style="font-weight: bold; font-size: 150% !important; margin-bottom: 10px">
-(B) Wing Kwong Hall</div>
-<p>Inside school</p>
-<p>A cosy and leisure hotel in school. The prices are around 250 for single, 300 CNY for king size and 350 CNY for twin beds.
+        {images: [{src: require('../assets/images/accom_B1.png')}],
+          info: require('../assets/images/accomB_info.png'),
+          title: '(B) Wing Kwong Hall | 荣光堂',
+          texts: [`<div style="font-weight: bold; font-size: 150% !important; margin-bottom: 10px">
+(B) Wing Kwong Hall | 荣光堂</div>
+<p><i class="icon iconfont icon-dizhi"></i> Inside school</p>
+<p>
+1. Breakfast already covered | 含早餐
 </p>
-<p><i class="icon iconfont icon-lianxiwomen"></i> +86­020­84110928</p>
+<p>
+2. VISA and MasterCard NOT supported in payment, Receipt included | 可刷银联、不支持VISA、MasterCard，可开发票
+</p>
+<p style="color: red">
+3. Rooms not guaranteed to be available until early October, 2019
+ | 部分房源可能无法保证，房源最终确定时间为2019年10月上旬
+</p>
+<p><i class="icon iconfont icon-lianxiwomen"></i> +86­020-84112138</p>
 `]},
-      {images: [{src: require('../assets/images/accom_C1.png')}],
-        title: '(C) Zijing Yuan Hotel',
-        texts: [`<div style="font-weight: bold; font-size: 150% !important; margin-bottom: 10px">
-(C) Zijing Yuan Hotel</div>
-<p>Inside school</p>
-<p>A three­star garden­style hotel in school. The prices are around 200 CNY for single, 300 CNY for twin beds and 400 CNY for suit.
+        {images: [{src: require('../assets/images/accom_C1.png')}],
+          info: require('../assets/images/accomC_info.png'),
+          title: '(C) Zijing Yuan Hotel | 紫荆园',
+          texts: [`<div style="font-weight: bold; font-size: 150% !important; margin-bottom: 10px">
+(C) Zijing Yuan Hotel | 紫荆园</div>
+<p><i class="icon iconfont icon-dizhi"></i> Inside school</p>
+<p>
+1. Breakfast not covered; Zijing Yuan Restaurant located on the first/ground floor | 不含早餐，楼下有紫荆园餐厅
+</p>
+<p>
+2. VISA and MasterCard supported in payment, Receipt included | 可刷银联、VISA、MasterCard，可开发票
+</p>
+<p style="color: red">
+3. Information concerning the desired room type and amount should be included in the registration page in the form of Additional Notes; Rooms are preserved so long as participation fees are paid, rooms not guaranteed to be available thereafter otherwise
+ | 报名时备注预订房型和数量，缴纳注册费后可保留房间，否则不保证房源。
 </p>
 <p><i class="icon iconfont icon-lianxiwomen"></i> +86­020­84111888</p>
-`]},
-      {images: [{src: require('../assets/images/accom_D1.png')}],
-        title: '(D) New Pearl River Hotel',
-        texts: [`<div style="font-weight: bold; font-size: 150% !important; margin-bottom: 10px">
-(D) New Pearl River Hotel</div>
-<p>A four­star business hotel near the Pearl River. The prices are around 400 CNY for twin beds or king size and 900 CNY for suit.
-</p>
-<p><i class="icon iconfont icon-lianxiwomen"></i> +86­020­22615225</p>
-`]},
-      {images: [{src: require('../assets/images/accom_F.jpg')}],
-        title: '(E) Home Inn',
-        texts: [`<div style="font-weight: bold; font-size: 150% !important; margin-bottom: 10px">
-(E) Home Inn</div>
-<p>A concise and comfortable hotel for business and traveling with the price at around 300 CNY for twin beds or king size.
-</p>
-<p><i class="icon iconfont icon-lianxiwomen"></i> 400­820­333</p>
-`]},
-      {images: [{src: require('../assets/images/accom_F.jpg')}],
-        title: '(F) Shangri­la Hotel',
-        texts: [`<div style="font-weight: bold; font-size: 150% !important; margin-bottom: 10px">
-(F) Shangri­la Hotel</div>
-<p>Fine­star hotel­fully built in 2007</p>
-<p>Address: 1 Hui Zhan Dong Road, Hai Zhu District, Guangzhou</p>
-<p>Airports: 41.9 km from the Guangzhou Baiyun International Airport</p>
-<p>Railway Station: 750m km from the Guangzhou East Railway Station</p>
-<p>Distance to conference venue: 9.5km </p>
-<p><i class="icon iconfont icon-lianxiwomen"></i> +86­020­89178888</p>
-<p>https://www.shangri­la.com/guangzhou/shangrila/</p>
-`]},
-      {images: [{src: require('../assets/images/accom_G.png')}],
-        title: '(G) The Ritz­Carlton (Guangzhou)',
-        texts: [`<div style="font-weight: bold; font-size: 150% !important; margin-bottom: 10px">
-(G) The Ritz­Carlton (Guangzhou)</div>
-<p>Fine­star hotel­fully built in 2008</p>
-<p>Address: 3 Xing An Road, Pearl River New City, Tianhe District, Guangzhou</p>
-<p>Airports: 45 km (or 30 minutes by car) from the Guangzhou Baiyun International Airport</p>
-<p>Railway Station: 3 km (or 10 minutes by car) from the Guangzhou East Railway Station</p>
-<p>Distance to conference venue: 6.7km</p>
-<p><i class="icon iconfont icon-lianxiwomen"></i> +86­020­3813 6688</p>
-<p>https://www.ritzcarlton.com/en/Properties/Guangzhou/Default.htm</p>
-`]},
-      {images: [{src: require('../assets/images/accom_H.png')}],
-        title: '(H) Ramada Pearl Hotel',
-        texts: [`<div style="font-weight: bold; font-size: 150% !important; margin-bottom: 10px">
-(H) Ramada Pearl Hotel</div>
-<p>Four­star hotel­fully refurbished in 2005</p>
-<p>Address: 9 Mingyue Yi Road (Mingyueyi Lu), Dongshan District • Guangzhou</p>
-<p>Airports: 35 km from the Guangzhou New Baiyun International Airport</p>
-<p>Railway Station: 10 km from the Guangzhou Railway Station</p>
-<p>Distance to conference venue: 6.1km</p>
-<p><i class="icon iconfont icon-lianxiwomen"></i> +86­020­6113 1220</p>
-<p>https://www.huilv.com/EN/Home.asp?id=17131</p>
 `]}
       ]
     }

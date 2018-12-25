@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <div style="margin-top: 50px"></div>
+    <div class="header-patch"></div>
     <el-card>
       <el-tabs tab-position="top">
-        <el-tab-pane class="tab-pane" label="Guided Tours">
+        <el-tab-pane class="tab-pane" label="Transportation Info">
           <div class="title"><i class="icon iconfont icon-guangzhoujiedai"></i> Welcome to Guangzhou!</div>
           <div class="text">
             <div class="tour-intro">
-              Guangzhou is the capital city of Guangdong Province. As the third largest city of China, it is enjoying a fast and prosperous economic development. The traffic network is very convenient.
+              Guangzhou is the provincial capital of Guangdong. As one of the first coastal open cities in China, Guangzhou is famous of its prosperous economic development and cuisine culture. The traffic network here is also convenient.
             </div>
             <!---->
             <div class="guide-section-title">
-              Airline
+              <i class="icon iconfont icon-lvyou2"></i> Airline
             </div>
             <div class="guide-section-text">
               <div class="guide-section-paragraph">
@@ -21,42 +21,48 @@
                 Located in the north of Guangzhou, neighboring Huadu District and Renhe Town, the airport is 28 kilometers distant from Haizhu Square, the geographic center of Guangzhou. Using specially constructed expressways, passengers from Guangzhou or neighboring cities can arrive at the airport conveniently.
               </div>
               <div class="guide-section-paragraph">
-                There are 15 express bus lines between the city center and airport, including Airport Express Lines 1-11, Foshan Line, Shude Line, Nanhai Line, and Longshan Line, with fares ranging from 10 to 45 yuan. There are also multiple bus lines between the new airport and cities in the Pearl River Delta.Time table of expressway as follow: Time Table of Expressways.
+                There are more than 15 express bus lines between the city center and airport, including Airport Express Lines 1-11, Foshan Line, Shude Line, Nanhai Line, and Longshan Line, with fares ranging from 10 to 45 yuan. There are also multiple bus lines between the new airport and cities in the Pearl River Delta.Time table of expressway as follow: Time Table of Expressways.
+              </div>
+              <div class="guide-section-paragraph bold">
+                The total distance from the airport to the hotel is about 45 km.
               </div>
             </div>
             <!---->
             <div class="guide-section-title">
-              Metro
+              <i class="icon iconfont icon-guangzhouditie"></i> Metro
             </div>
             <div class="guide-section-text">
               <div class="guide-section-paragraph">
-                There are fourteen metro lines in Guangzhou and service charges are based on the distance between pick-up and destination points: charges are RMB2 for the first four kilometers; RMB1/every four kilometers from four to twelve kilometers; RMB1/every six kilometers from twelve to twenty-four kilometers and RMB1/every eight kilometers over the distance of twenty-four kilometers.
+                There are more than 14 metro lines in Guangzhou and service charges are based on the distance between pick-up and destination points: charges are 2 RMB for the first 4 kilometers; 1 RMB/every 4 kilometers from 4 to 12 kilometers; 1 RMB/every 6 kilometers from 12 to 24 kilometers and 1 RMB/every 8 kilometers over the distance of 24 kilometers.
               </div>
               <div class="guide-section-paragraph">
                 Metro Route: <el-tag type="success">http://www.gzmtr.com/</el-tag>
               </div>
+              <el-row type="flex" justify="center">
+                <img src="../assets/images/metro-lines.png" alt="">
+              </el-row>
             </div>
             <!---->
-            <div class="guide-section-title">
-              Taxi
-            </div>
-            <div class="guide-section-text">
-              <div class="guide-section-paragraph">
-                There are about 16,000 taxis in Guangzhou. The various colors of the cars signify different taxi companies. Passengers can stop a taxi by just waving his or her hand.
-              </div>
-              <div class="guide-section-paragraph">
-                The basic charge is RMB 10 for the first 2.5 kilometers and, at the destination they pay the charge that is displayed on the taximeter. The price per kilometer beyond the initial 2.5 kilometers is RMB2.2 or RMB2.6 per kilometer depending on whether the route is inside or outside the defined metro service area.
-              </div>
-            </div>
+            <!--<div class="guide-section-title">-->
+              <!--<i class="icon iconfont icon-guangzhoujiedai"></i> Taxi-->
+            <!--</div>-->
+            <!--<div class="guide-section-text">-->
+              <!--<div class="guide-section-paragraph">-->
+                <!--Different colors of the taxis indicate various companies they are from. Passengers can stop a taxi by simply signalling with one's hand.-->
+              <!--</div>-->
+              <!--<div class="guide-section-paragraph">-->
+                <!--The basic charge is 10 RMB for the first 2.5 kilometers and, at the destination they pay the charge that is displayed on the taximeter. The unit price beyond the initial 2.5 kilometers is 2.2 RMB or 2.6 RMB per kilometer depending on whether the route is inside or outside the defined metro service area.-->
+              <!--</div>-->
+            <!--</div>-->
           </div>
         </el-tab-pane>
-        <el-tab-pane class="tab-pane" label="Guided Tours">
-          <div class="title"><i class="icon iconfont icon-guangzhoujiedai"></i> Have fun in Guangzhou!</div>
+        <el-tab-pane class="tab-pane" label="Environmental Investigations">
+          <div class="title"><i class="icon iconfont icon-lvyou1"></i> Environmental Investigations</div>
           <div v-for="o in tourContents" :key="o">
+            <div v-for="text in o.texts" :key="text" class="tour-section-text">{{ text }}</div>
             <div v-for="img in o.images" :key="img">
               <img :src="img.src" alt="" width="100%" oncontextmenu="return false;" ondragstart="return false;"/>
             </div>
-            <div v-for="text in o.texts" :key="text" class="tour-section-text">{{ text }}</div>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -71,33 +77,15 @@ export default {
     return {
       // activeName: this.$route.query.activeName || 'first',
       tourContents: [{
-        images: [{src: require('../assets/images/tour_A.jpg')}],
-        texts: [`Guangzhou, capital of south China, is not only noted for its prosperous economy but also for its incomparable geographical position, for there are many places of interest in city area such as Beijing Road Pedestrian Shopping Street, Changlong Amusement park, Dr. Sun Yat-sen's memorial Hall and a lot of tourist interests of world prestige in surrounding cities such as Guilin, the ancient town of Lijiang, Zhangjiajie National Forest Park and so forth, all of which are quite near and easy to reach from Guangzhou.
-      `]
-      },
-      {
-        images: [{src: require('../assets/images/tour_B.jpg')}],
-        texts: [`Guilin is one of China's most picturesque cities, situated in the northeast of the Guangxi Zhuang Autonomous Region of China on the west bank of the Lijiang River. Its name means "forest of Sweet Osmanthus", owing to the large number of fragrant Sweet Osmanthus trees located in the city. It boasts of its characteristic tropical and subtropical karst landform such as Elephant Trunk Hill, Diecai Park, Reed Flute Cave and the mirror-like water of the Lijiang River. Thus, there is a saying that goes "East or west, Guilin landscape is the best".
-        `]
-      },
-      {
-        images: [{src: require('../assets/images/tour_C.jpg')}],
-        texts: [`Located in the northwest of Yunnan Province of China, the ancient town of Lijiang was built about 800 years ago during the Southern Song Dynasty. Owing to it's unique and time-honored ethnic culture and urban layout, this old town (including Baisha and Shuhe housing clusters) was enlisted to be one of World Cultural Heritage in 1997. In this ancient town, the old street which is built along the river, paved by Breccia and the commercial center of the town and 364 old bridges which was built over the Yu water system every one kilometer in Qing dynasty are awfully warm welcomed resorts of the town.
-        `]
-      },
-      {
-        images: [{src: require('../assets/images/tour_D.jpg')}],
-        texts: [`Located in the northwest of Hunan province of China, Zhangjiajie National Forest Park was established by the State Council in 1982 as the first National Forest Park of China. It was listed into the World Heritage Directory by UNESCO in 1992, and in 2004 was listed as a UNESCO Global Geopark. It is among the first scenery spots that were recognized as the China's Class AAAAA Scenery Spots in 2007. It was once chosen as one of the shooting sites of Avatar. Tianmen Mountain is the highest karst cave through mountain and it is noted as wonder of mother nature.
-        `]
-      },
-      {
-        images: [{src: require('../assets/images/tour_E.jpg')}],
-        texts: [`Danxiashan National Park with the area of 290km2 is located in the northeastern suburban area of the city of Shaoguan, Guangdong province, China. It is based on the landform of Mt. Danxia. Danxia which can be literally understood as “red sunglow” according to its Chinese meaning has features with “luster as vermeil and patina as sunglow”. In 1930’s the landform characteristic of non-marine red clastic rock, red walls and red cliffs was named by geologists Danxia Landform. Therefore, the park is quite famous for its rare red stone and steep red cliff, limpid water, verdant trees and peaceful country scenery.
-        `]
-      },
-      {
-        images: [{src: require('../assets/images/tour_F.jpg')}, {src: require('../assets/images/tour_G.jpg')}],
-        texts: [`Hong Kong and Macao, located in the south of China are two Special Administrative Regions of China. As prosperous Cosmopolis, they enjoy world reputation. Being one of the financial center of Asia Hongkong is renowned as the Pearl of the Orient. Meanwhile it is a desired destination of entertainment and shopping. Such palces as Hong Kong Ocean Park, Dysineyland, Taikoo Shing and New Town Plaza are of great magic for tourists from home and abroad. Macao boasts of the city without darkness and is one the most popular destination of entertainment. Lisboa Casino is one of the three renowned casinos in the world and Ruins of St.Paul is the symbol of Maccao.
+        images: [
+          {src: require('../assets/images/Qi-Xing-Yan1.jpg')},
+          {src: require('../assets/images/Qi-Xing-Yan2.jpg')},
+          {src: require('../assets/images/Qi-Xing-Yan3.jpg')},
+          {src: require('../assets/images/Qi-Xing-Yan4.jpg')},
+          {src: require('../assets/images/Qi-Xing-Yan5.jpg')},
+          {src: require('../assets/images/Qi-Xing-Yan6.jpg')},
+          {src: require('../assets/images/Qi-Xing-Yan7.jpg')}],
+        texts: [`Qi-Xing-Yan (Seven Star Rocks) Scenic Spot with a total area over 8.23 km2, located at the north of Zhaoqing city in Guangdong Province, gets its name from the seven limestone peaks arranged like the Big Dipper stars in the sky. The spot enjoys a sightseeing history of more than 1000 years due to its picturesque scenery of strangely shape crags, unique caves and beautiful lakes. Within the spot, the cliff inscription since Tang dynasty (known as “Poems Corridor of a Thousand Years) provides the tourists a good chance for cultural exploration of the art of inscription calligraphy and Chinese poems. Based on the islands and pools in the spot, Xinghu Wetland Park was built in 2004 and has been developed an important ecological preservation area for wildlife.
         `]
       }
       ]
@@ -156,5 +144,8 @@ export default {
     font-size: larger !important;
     line-height: 40px;
     text-align: left;
+  }
+  .bold {
+    font-weight: bold;
   }
 </style>
